@@ -1,4 +1,4 @@
-name: Build DayFlow APK
+name: Build DayFlow APK 
 
 on:
   workflow_dispatch:
