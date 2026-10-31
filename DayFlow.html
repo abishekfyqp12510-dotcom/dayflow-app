@@ -896,6 +896,18 @@ async function installApp() {
 }
 
 async function enableNotifications() {
+  // Inside the Android app: ask Android for permission through the native plugin.
+  const N = nativeNotifier();
+  if (N) {
+    const perm = await N.requestPermissions();
+    if (perm.display === "granted") {
+      await scheduleNativeReminders();
+      alert("Reminders are on. You will get notifications even when the app is closed.");
+    } else {
+      alert("Notifications are off. Turn them on for DayFlow in your phone's settings.");
+    }
+    return;
+  }
   if (!("Notification" in window)) {
     alert("This browser does not support notifications.");
     return;
