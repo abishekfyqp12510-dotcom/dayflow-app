@@ -1,4 +1,4 @@
-name: Build DayFlow APK 
+name: Build DayFlow APK
 
 on:
   workflow_dispatch:
@@ -25,6 +25,13 @@ jobs:
         run: |
           if [ ! -d android ]; then npx cap add android; fi
           npx cap sync android
+      - name: Set the app icon from icon.png
+        run: |
+          if [ -f icon.png ]; then
+            mkdir -p resources
+            cp icon.png resources/icon.png
+            npx @capacitor/assets generate --android --iconBackgroundColor "#ffffff" --iconBackgroundColorDark "#ffffff"
+          fi
       - name: Build the debug APK
         working-directory: android
         run: |
