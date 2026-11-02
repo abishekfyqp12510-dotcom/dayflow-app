@@ -735,6 +735,23 @@ input, select { border-radius: 14px; }
     </section>
 
     <section class="card">
+      <div class="card-head"><h2>Class timetable</h2></div>
+      <div class="meta">Add your periods and breaks. They repeat on weekdays, DayFlow plans around them, and Android sends reminders before each one.</div>
+      <div class="form" style="margin-top:14px">
+        <input id="ttName" placeholder="e.g. Period 1: Mathematics">
+        <div class="row">
+          <div><label>Start</label><input id="ttStart" type="time" value=""></div>
+          <div><label>End</label><input id="ttEnd" type="time" value=""></div>
+        </div>
+        <div><label>Type</label>
+          <select id="ttKind"><option value="class" selected>Class</option><option value="break">Break</option></select>
+        </div>
+        <button onclick="addTimetable()">Add to timetable</button>
+      </div>
+      <div id="timetableList" class="task-list"></div>
+    </section>
+
+    <section class="card">
       <div class="card-head"><h2>Tasks</h2></div>
       <div class="form">
         <input id="taskName" placeholder="e.g. Mathematics assignment">
@@ -832,6 +849,7 @@ input, select { border-radius: 14px; }
 const state = {
   fixed: JSON.parse(localStorage.getItem("dayflow_fixed") || "[]"),
   tasks: JSON.parse(localStorage.getItem("dayflow_tasks") || "[]"),
+  timetable: JSON.parse(localStorage.getItem("dayflow_timetable") || "[]"),
   prefs: JSON.parse(localStorage.getItem("dayflow_prefs") || '{"wake":"","sleep":"","reminder":"","style":""}'),
   schedule: []
 };
@@ -977,7 +995,7 @@ function generateSchedule() {
 
   // 1. Fixed commitments, trimmed so they stay inside wake-up..bedtime.
   const fixedBlocks = [];
-  state.fixed.forEach(x => {
+  [...state.fixed, ...state.timetable].forEach(x => {
     let s = minutes(x.start), e = minutes(x.end);
     // Only when the day crosses midnight do early-morning times count as "after midnight".
     if (wraps && s < wake) s += 1440;
@@ -1250,33 +1268,99 @@ function nativeNotifier() {
 
 async function scheduleNativeReminders() {
   const N = nativeNotifier();
-  if (!N || !state.schedule.length) return;
+  if (!N) return;
+  const now = new Date();
   const mode = document.getElementById("notifyMode").value;
   const offset = Number(state.prefs.reminder || 10);
-  const now = new Date();
   const list = [];
+  // A date at a clock time (minutes after midnight), moved forward by dayOffset days.
+  const at = (clockMin, dayOffset = 0) => {
+    const d = new Date();
+    d.setDate(d.getDate() + dayOffset);
+    d.setHours(Math.floor(clockMin / 60), clockMin % 60, 0, 0);
+    return d;
+  };
+  const add = (title, body, when) => { if (when > now && list.length < 400) list.push({ title, body, at: when }); };
+
+  // 1. Task blocks in today's schedule.
   state.schedule.filter(x => x.type === "task").forEach(task => {
-    const start = new Date();
-    start.setHours(Math.floor(task.start / 60), task.start % 60, 0, 0);
-    if (start <= now) return;
+    const start = at(task.start);
     if (mode === "before" || mode === "both") {
-      const when = new Date(start.getTime() - offset * 60000);
-      if (when > now) list.push({ title: `${task.name} starts in ${offset} minutes`, body: "Prepare for your next scheduled task.", at: when });
+      add(`${task.name} starts in ${offset} minutes`, "Prepare for your next scheduled task.", new Date(start.getTime() - offset * 60000));
     }
     if (mode === "start" || mode === "both") {
-      list.push({ title: `Time to start: ${task.name}`, body: "Your scheduled block begins now.", at: start });
+      add(`Time to start: ${task.name}`, "Your scheduled block begins now.", start);
     }
   });
-  // Clear last time's reminders (ids 1000-1099), then add the new ones.
-  const oldIds = Array.from({ length: 100 }, (_, i) => ({ id: 1000 + i }));
-  await N.cancel({ notifications: oldIds }).catch(() => {});
+
+  // 2. Assignment deadlines: 24 hours before and 1 hour before.
+  state.tasks.filter(t => !t.done && t.deadline).forEach(t => {
+    const due = new Date(t.deadline);
+    add("Assignment due in 24 hours", `${t.name} is due tomorrow.`, new Date(due.getTime() - 24 * 60 * 60000));
+    add("Assignment due in 1 hour", `${t.name} is due soon. Submit it now.`, new Date(due.getTime() - 60 * 60000));
+  });
+
+  // 3. Timetable, Monday to Friday, for the next 7 days.
+  for (let k = 0; k < 7; k++) {
+    const day = new Date();
+    day.setDate(day.getDate() + k);
+    if (day.getDay() === 0 || day.getDay() === 6) continue;
+    state.timetable.forEach(item => {
+      const start = at(minutes(item.start), k);
+      if (item.kind === "break") {
+        add(`Break time: ${item.name}`, "Your break starts now.", start);
+      } else {
+        add(`${item.name} starts in 5 minutes`, "Get ready for your next period.", new Date(start.getTime() - 5 * 60000));
+      }
+    });
+  }
+
+  // Clear last time's reminders (ids 1000-1399), then schedule the new ones.
+  const old = Array.from({ length: 400 }, (_, i) => ({ id: 1000 + i }));
+  await N.cancel({ notifications: old }).catch(() => {});
   if (!list.length) return;
   await N.schedule({
-    notifications: list.slice(0, 100).map((n, i) => ({
+    notifications: list.map((n, i) => ({
       id: 1000 + i, title: n.title, body: n.body,
       schedule: { at: n.at, allowWhileIdle: true }
     }))
   });
+}
+
+// ---------- Class timetable ----------
+function saveTimetable() { localStorage.setItem("dayflow_timetable", JSON.stringify(state.timetable)); }
+
+function addTimetable() {
+  const name = document.getElementById("ttName").value.trim();
+  const kind = document.getElementById("ttKind").value;
+  const start = document.getElementById("ttStart").value;
+  const end = document.getElementById("ttEnd").value;
+  if (!name || !start || !end) return alert("Enter a name, a start time, and an end time.");
+  if (minutes(end) <= minutes(start)) return alert("The end time must be after the start time.");
+  state.timetable.push({ id: Date.now(), name, kind, start, end });
+  saveTimetable();
+  document.getElementById("ttName").value = "";
+  generateSchedule();
+  renderLists();
+}
+
+function removeTimetable(id) {
+  state.timetable = state.timetable.filter(x => x.id !== id);
+  saveTimetable();
+  generateSchedule();
+  renderLists();
+}
+
+function renderTimetable() {
+  const el = document.getElementById("timetableList");
+  if (!el) return;
+  const items = state.timetable.slice().sort((a, b) => minutes(a.start) - minutes(b.start));
+  el.innerHTML = items.length
+    ? items.map(t => `<div class="task">
+        <div><strong>${esc(t.name)}</strong><small>${t.start} to ${t.end} • ${t.kind === "break" ? "Break" : "Class"}</small></div>
+        <button class="danger" onclick="removeTimetable(${t.id})">Remove</button>
+      </div>`).join("")
+    : '<div class="empty">No timetable yet. Add your periods and breaks.</div>';
 }
 
 function markScheduledDone(id) {
@@ -1286,7 +1370,7 @@ function markScheduledDone(id) {
 function clearAll() {
   if (!confirm("Reset everything in DayFlow? This clears your routine, commitments, tasks, tracker history, and all settings.")) return;
   ["dayflow_fixed", "dayflow_log", "dayflow_tasks", "dayflow_prefs",
-   "dayflow_appearance_v2", "dayflow_notifyMode", "dayflow_notifyStyle", "dayflow_guide_seen"]
+   "dayflow_appearance_v2", "dayflow_notifyMode", "dayflow_notifyStyle", "dayflow_guide_seen", "dayflow_timetable"]
     .forEach(k => localStorage.removeItem(k));
   // Keep this flag set so the demo data is not added again after the reset.
   localStorage.setItem("dayflow_seeded", "1");
@@ -1506,6 +1590,14 @@ function guidePrev() {
 if (!localStorage.getItem('dayflow_guide_seen')) {
   setTimeout(openGuide, document.getElementById('introSplash') ? 3400 : 400);
 }
+
+// Whenever the lists change, redraw the timetable and refresh the Android reminders.
+const renderListsBase = renderLists;
+renderLists = function () {
+  renderListsBase();
+  renderTimetable();
+  scheduleNativeReminders().catch(() => {});
+};
 </script>
 <div id="guide" class="guide" hidden role="dialog" aria-modal="true" aria-label="How to use DayFlow">
   <div class="guide-card">
