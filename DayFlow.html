@@ -749,7 +749,7 @@ table.tt { width: 100%; border-collapse: separate; border-spacing: 0; font-size:
     </section>
 
     <section class="card">
-      <div class="card-head"><h2>Upcoming reminders</h2></div>
+      <div class="card-head"><h2>Reminder preview</h2></div>
       <div id="reminders" class="empty">Generate a schedule to see personalized reminders.</div>
     </section>
   </main>
@@ -989,6 +989,10 @@ function addTask() {
   const preference = document.getElementById("taskPreference").value;
   if (!name || duration < 5) return alert("Enter a task and a duration of at least 5 minutes.");
   if (!priority) return alert("Choose a priority for this task.");
+  const chosenProject = state.projects.find(p => String(p.id) === document.getElementById("taskProject").value);
+  if (chosenProject && deadline && new Date(deadline) > new Date(chosenProject.deadline)) {
+    return alert(`This subtask would be due after the project's final deadline (${fmtDT(chosenProject.deadline)}). Move the subtask deadline earlier or choose another project.`);
+  }
   const collection = document.getElementById("taskCollection").value;
   const projectId = document.getElementById("taskProject").value;
   state.tasks.push({id:Date.now(), name, duration, priority, deadline, collection, preference, project: projectId ? Number(projectId) : null, done:false});
@@ -1371,6 +1375,13 @@ async function scheduleNativeReminders() {
     }
   });
 
+  // Project final deadlines: 24 hours and 1 hour before.
+  state.projects.forEach(p => {
+    const due = new Date(p.deadline);
+    add("Project due in 24 hours", `${p.name}: the final deadline is tomorrow.`, new Date(due.getTime() - 24 * 60 * 60000));
+    add("Project due in 1 hour", `${p.name}: the final deadline is in 1 hour.`, new Date(due.getTime() - 60 * 60000));
+  });
+
   // 2. Assignments: submission time, and the teacher's collection time.
   state.tasks.filter(t => !t.done).forEach(t => {
     if (t.deadline) {
@@ -1743,14 +1754,18 @@ function renderUpcoming() {
   const el = document.getElementById("upcomingList");
   if (!el) return;
   const now = new Date();
-  const items = state.tasks.filter(t => !t.done && t.deadline)
-    .sort((a, b) => new Date(a.deadline) - new Date(b.deadline)).slice(0, 5);
-  el.innerHTML = items.length ? items.map(t => {
-    const due = new Date(t.deadline);
-    const alert = due < now ? "Overdue" : ((due - now) / 3600000 <= 72 ? "Due soon" : "On track");
-    const proj = projName(t.project);
+  const items = [];
+  state.tasks.filter(t => !t.done && t.deadline).forEach(t => items.push({
+    name: t.name, sub: projName(t.project) || "Subtask", raw: t.deadline, at: new Date(t.deadline) }));
+  state.projects.forEach(p => {
+    if (projectStats(p).status === "Completed") return;
+    items.push({ name: p.name, sub: "Project final deadline", raw: p.deadline, at: new Date(p.deadline) });
+  });
+  items.sort((a, b) => a.at - b.at);
+  el.innerHTML = items.length ? items.slice(0, 5).map(i => {
+    const alert = i.at < now ? "Overdue" : ((i.at - now) / 3600000 <= 72 ? "Due soon" : "On track");
     return `<div class="task">
-      <div><strong>${esc(t.name)}</strong><div class="meta">${proj ? esc(proj) + " • " : ""}Submit: ${fmtDT(t.deadline)}</div></div>
+      <div><strong>${esc(i.name)}</strong><div class="meta">${esc(i.sub)} • ${fmtDT(i.raw)}</div></div>
       <span class="pill-tag ${statusClass(alert)}">${alert}</span>
     </div>`;
   }).join("") : '<div class="empty">No upcoming deadlines.</div>';
