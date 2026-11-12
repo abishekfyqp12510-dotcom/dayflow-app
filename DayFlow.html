@@ -214,7 +214,7 @@ body::before {
 .panel { position: relative; isolation: isolate; animation: rise .6s cubic-bezier(.2,.8,.2,1) both; }
 .panel::after {
   content: ""; position: absolute; inset: -3px; border-radius: inherit; z-index: -1; pointer-events: none;
-  box-shadow: 0 0 26px 4px color-mix(in srgb, var(--accent) 35%, transparent);
+  box-shadow: 0 0 26px 4px rgba(139, 124, 255, 0.35);
   
 }
 @keyframes haloFade { 0%, 100% { opacity: .2; } 50% { opacity: .6; } }
@@ -232,12 +232,12 @@ body::before {
    Animations only use opacity and transform, so they stay smooth.
    ===================================================================== */
 :root {
-  --hair: color-mix(in srgb, var(--text) 9%, transparent);
-  --hair-strong: color-mix(in srgb, var(--text) 16%, transparent);
-  --surface: color-mix(in srgb, var(--panel) 92%, transparent);
-  --field: color-mix(in srgb, var(--panel2) 70%, #000 30%);
-  --ring: color-mix(in srgb, var(--accent) 35%, transparent);
-  --lift: 0 1px 0 color-mix(in srgb, var(--text) 6%, transparent) inset,
+  --hair: rgba(127, 127, 160, 0.09);
+  --hair-strong: rgba(127, 127, 160, 0.16);
+  --surface: var(--panel);
+  --field: var(--panel2);
+  --ring: rgba(139, 124, 255, 0.35);
+  --lift: 0 1px 0 rgba(127, 127, 160, 0.06) inset,
           0 24px 48px -24px rgba(0,0,0,.55), 0 2px 6px rgba(0,0,0,.12);
   --ease-out: cubic-bezier(.22,.8,.24,1);
 }
@@ -271,7 +271,7 @@ body::after {
 /* Panels: layered surfaces with a hairline edge and soft depth */
 .panel {
   background:
-    linear-gradient(180deg, color-mix(in srgb, var(--text) 4%, transparent), transparent 42%),
+    linear-gradient(180deg, rgba(127, 127, 160, 0.04), transparent 42%),
     var(--surface);
   border: 1px solid var(--hair);
   border-radius: 22px;
@@ -299,7 +299,7 @@ input, select, textarea {
   border-radius: 12px; padding: 12px 14px; color: var(--text);
   transition: border-color .2s ease, box-shadow .2s ease, background .2s ease;
 }
-input:hover, select:hover, textarea:hover { border-color: color-mix(in srgb, var(--text) 24%, transparent); }
+input:hover, select:hover, textarea:hover { border-color: rgba(127, 127, 160, 0.24); }
 input:focus, select:focus, textarea:focus {
   outline: none; border-color: var(--accent);
   box-shadow: 0 0 0 4px var(--ring);
@@ -310,18 +310,18 @@ button {
   font-size: 14px; font-weight: 650; letter-spacing: .01em; color: #fff;
   border-radius: 12px; padding: 12px 16px;
   background: linear-gradient(135deg, var(--accent), var(--accent2));
-  box-shadow: 0 10px 24px -10px color-mix(in srgb, var(--accent2) 70%, transparent), 0 1px 0 rgba(255,255,255,.18) inset;
+  box-shadow: 0 10px 24px -10px rgba(110, 168, 254, 0.70), 0 1px 0 rgba(255,255,255,.18) inset;
   transition: transform .18s var(--ease-out), box-shadow .25s ease, filter .25s ease;
 }
-button:hover { transform: translateY(-1px); filter: brightness(1.06); box-shadow: 0 14px 30px -12px color-mix(in srgb, var(--accent2) 75%, transparent), 0 1px 0 rgba(255,255,255,.2) inset; }
+button:hover { transform: translateY(-1px); filter: brightness(1.06); box-shadow: 0 14px 30px -12px rgba(110, 168, 254, 0.75), 0 1px 0 rgba(255,255,255,.2) inset; }
 button:active { transform: translateY(0) scale(.98); filter: brightness(.96); }
 button:focus-visible { outline: none; box-shadow: 0 0 0 4px var(--ring); }
 button.secondary {
   background: var(--surface); color: var(--text); border: 1px solid var(--hair-strong);
-  box-shadow: 0 1px 0 color-mix(in srgb, var(--text) 6%, transparent) inset;
+  box-shadow: 0 1px 0 rgba(127, 127, 160, 0.06) inset;
 }
-button.secondary:hover { filter: none; background: color-mix(in srgb, var(--text) 6%, var(--surface)); }
-button.danger { background: color-mix(in srgb, var(--danger) 12%, transparent); color: var(--danger); border: 1px solid color-mix(in srgb, var(--danger) 30%, transparent); box-shadow: none; }
+button.secondary:hover { filter: none; background: var(--panel); }
+button.danger { background: rgba(255, 113, 130, 0.12); color: var(--danger); border: 1px solid rgba(255, 113, 130, 0.30); box-shadow: none; }
 
 /* Task cards */
 .task {
@@ -346,23 +346,23 @@ button.danger { background: color-mix(in srgb, var(--danger) 12%, transparent); 
   content: ""; position: absolute; left: 0; top: 12px; bottom: 12px; width: 3px; border-radius: 3px;
   background: linear-gradient(180deg, var(--accent), var(--accent2));
 }
-.slot.fixed::before { background: linear-gradient(180deg, var(--accent2), color-mix(in srgb, var(--accent2) 40%, transparent)); }
-.slot.sleep::before { background: linear-gradient(180deg, var(--good), color-mix(in srgb, var(--good) 40%, transparent)); }
+.slot.fixed::before { background: linear-gradient(180deg, var(--accent2), rgba(110, 168, 254, 0.40)); }
+.slot.sleep::before { background: linear-gradient(180deg, var(--good), rgba(47, 191, 143, 0.40)); }
 .slot.free {
   background: transparent; border: 1px dashed var(--hair-strong);
 }
-.slot.free::before { background: color-mix(in srgb, var(--text) 14%, transparent); }
+.slot.free::before { background: rgba(127, 127, 160, 0.14); }
 .slot:hover { translate: 3px 0; }
 .time { font-size: 13px; font-weight: 650; font-variant-numeric: tabular-nums; letter-spacing: .01em; }
 .slot small { font-size: 12px; }
 .slot.now {
-  background: linear-gradient(90deg, color-mix(in srgb, var(--accent2) 18%, transparent), transparent 85%), var(--surface);
-  border-color: color-mix(in srgb, var(--accent) 50%, transparent);
+  background: linear-gradient(90deg, rgba(110, 168, 254, 0.18), transparent 85%), var(--surface);
+  border-color: rgba(139, 124, 255, 0.50);
   animation: none;
 }
 @keyframes nowPulse {
   0%, 100% { box-shadow: 0 0 0 0 var(--ring), 0 12px 28px -18px rgba(0,0,0,.6); }
-  50%      { box-shadow: 0 0 0 4px var(--ring), 0 16px 34px -16px color-mix(in srgb, var(--accent) 45%, transparent); }
+  50%      { box-shadow: 0 0 0 4px var(--ring), 0 16px 34px -16px rgba(139, 124, 255, 0.45); }
 }
 .now-tag {
   font-size: 9px; font-weight: 800; letter-spacing: .12em; padding: 3px 8px;
@@ -378,11 +378,11 @@ button.danger { background: color-mix(in srgb, var(--danger) 12%, transparent); 
 .stat small { font-size: 11px; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
 
 /* Day progress and tracker */
-.day-bar { height: 6px; background: color-mix(in srgb, var(--text) 10%, transparent); }
+.day-bar { height: 6px; background: rgba(127, 127, 160, 0.10); }
 .day-progress small { font-size: 12px; font-variant-numeric: tabular-nums; }
 .tracker-head > div { background: var(--surface); border: 1px solid var(--hair); border-radius: 16px; }
 .tracker-head b { font-size: 24px; font-weight: 750; letter-spacing: -.02em; }
-.col-track { background: color-mix(in srgb, var(--text) 8%, transparent); border-radius: 12px; }
+.col-track { background: rgba(127, 127, 160, 0.08); border-radius: 12px; }
 .col-fill { border-radius: 12px; }
 
 /* Footer and corner mark */
@@ -692,6 +692,69 @@ table.tt { width: 100%; border-collapse: separate; border-spacing: 0; font-size:
 .tt-table .tt-time { min-width: 118px; }
 .tt-table .tt-time input { font-size: 12px; padding: 6px 7px; margin-bottom: 4px; }
 .tt-break { text-align: center; color: var(--muted); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; background: var(--panel2); border-radius: 11px; padding: 10px; }
+
+/* ===== Study tools ===== */
+.focus-time { font-size: 60px; font-weight: 800; letter-spacing: -0.04em; text-align: center; font-variant-numeric: tabular-nums; margin: 14px 0 4px; }
+.focus-label { text-align: center; font-size: 14px; color: var(--muted); margin-bottom: 14px; }
+.pick-list { display: flex; flex-direction: column; gap: 10px; }
+.pick { display: flex; align-items: center; gap: 12px; width: 100%; text-align: left; background: var(--panel2); color: var(--text); border: 1px solid var(--border); box-shadow: none; font-size: 16px; font-weight: 600; padding: 14px; border-radius: 16px; }
+.pick .tick { width: 28px; height: 28px; border-radius: 50%; display: grid; place-items: center; border: 1.5px solid var(--border); flex-shrink: 0; font-size: 14px; }
+.pick.on { border-color: var(--accent); }
+.pick.on .tick { background: var(--accent); color: #fff; border-color: var(--accent); }
+textarea { width: 100%; border-radius: 14px; background: var(--panel2); border: 1px solid var(--border); color: var(--text); padding: 12px 13px; font: inherit; font-size: 16px; resize: vertical; }
+
+/* Easier to use for ages 12 and up: larger text and touch targets */
+input, select, textarea { font-size: 16px; min-height: 48px; }
+button { min-height: 48px; font-size: 16px; }
+.tab { min-height: 58px; font-size: 13px; font-weight: 700; }
+.tab svg { width: 22px; height: 22px; }
+*:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+.empty { font-size: 15px; }
+
+/* ===== Visual timetable, subject tiles, and custom tables ===== */
+.vt-palette { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; }
+.vt-tile { padding: 10px 14px; min-height: 44px; border-radius: 12px; color: #fff; font-weight: 700; font-size: 14px; display: flex; align-items: center; touch-action: none; user-select: none; -webkit-user-select: none; cursor: grab; border: 2px solid transparent; }
+.vt-tile.sel { border-color: #fff; box-shadow: 0 0 0 2px var(--accent); }
+.vt-eraser { background: var(--panel2); color: var(--text); border: 1px dashed var(--border); }
+.vt-scroll { overflow-x: auto; padding-bottom: 4px; }
+.vt-grid { display: grid; gap: 6px; min-width: 100%; }
+.vt-day { font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); text-align: center; padding: 4px 0; }
+.vt-label { font-size: 12px; font-weight: 700; color: var(--muted); display: flex; align-items: center; }
+.vt-cell { min-height: 52px; border-radius: 12px; border: 1px dashed var(--border); background: var(--panel2); display: flex; align-items: center; justify-content: center; text-align: center; padding: 4px; font-size: 13px; font-weight: 700; color: #fff; touch-action: none; user-select: none; -webkit-user-select: none; cursor: pointer; }
+.vt-cell.sel-cell { outline: 2px solid var(--accent); outline-offset: 2px; }
+.vt-break { min-height: 52px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); background: rgba(127,127,160,.12); }
+.vt-ghost { position: fixed; left: 0; top: 0; z-index: 9999; pointer-events: none; padding: 10px 14px; border-radius: 12px; color: #fff; font-weight: 700; box-shadow: 0 12px 30px rgba(0,0,0,.4); }
+.tile-row { display: flex; align-items: center; gap: 10px; }
+.dot { width: 14px; height: 14px; border-radius: 50%; flex-shrink: 0; }
+.tile-actions { margin-top: 10px; }
+.tile-actions button { padding: 8px 12px; min-height: 40px; font-size: 14px; }
+.swatches { display: flex; flex-wrap: wrap; gap: 8px; }
+.swatch { width: 36px; height: 36px; min-height: 36px; border-radius: 50%; border: 2px solid transparent; padding: 0; box-shadow: none; }
+.swatch:hover { transform: none; filter: none; }
+.tb-pick { display: flex; flex-wrap: wrap; gap: 18px; align-items: flex-start; margin-top: 12px; }
+.size-grid { display: grid; grid-template-columns: repeat(8, 1fr); gap: 4px; width: 232px; touch-action: none; user-select: none; -webkit-user-select: none; }
+.size-grid div { aspect-ratio: 1; border-radius: 6px; background: var(--panel2); border: 1px solid var(--border); }
+.size-grid div.on { background: var(--accent); border-color: var(--accent); }
+.tb-counts { display: flex; flex-direction: column; gap: 10px; min-width: 180px; }
+.row-ctl { display: flex; align-items: center; gap: 8px; }
+.row-ctl span { flex: 1; font-weight: 600; font-size: 15px; }
+.row-ctl button { width: 48px; min-width: 48px; padding: 0; }
+.row-ctl b { min-width: 28px; text-align: center; font-size: 18px; }
+.tb-editor { margin-top: 16px; }
+.check { display: flex; align-items: center; gap: 8px; font-size: 15px; font-weight: 600; min-height: 44px; }
+.check input { width: 20px; height: 20px; min-height: 0; }
+.ct-wrap { overflow-x: auto; border-radius: 14px; border: 1px solid var(--border); }
+.ct-table { border-collapse: collapse; min-width: 100%; }
+.ct-table td { border: 1px solid var(--border); padding: 0; min-width: 120px; }
+.ct-input { width: 100%; border: 0; background: transparent; color: var(--text); padding: 10px 9px; font: inherit; font-size: 16px; min-height: 46px; border-radius: 0; }
+.ct-input:focus { outline: 2px solid var(--accent); outline-offset: -2px; }
+.ct-table td.head .ct-input { font-weight: 700; }
+.ct-table td.sel { box-shadow: inset 0 0 0 2px var(--accent); }
+.toolbar { display: flex; flex-wrap: wrap; gap: 6px; margin: 10px 0; }
+.toolbar button { padding: 8px 11px; min-height: 40px; font-size: 13px; }
+.toolbar button[disabled] { opacity: .45; }
+/* Signature line under the settings footer */
+.signature { text-align: center; margin-top: 10px; font-size: 12px; font-weight: 700; letter-spacing: .22em; color: var(--accent); text-shadow: 0 0 10px rgba(139,124,255,.55), 0 0 2px rgba(139,124,255,.6); opacity: .95; }
 </style>
 <link rel="manifest" href="data:application/manifest+json;base64,eyJuYW1lIjogIkRheUZsb3ciLCAic2hvcnRfbmFtZSI6ICJEYXlGbG93IiwgInN0YXJ0X3VybCI6ICIuLyIsICJkaXNwbGF5IjogInN0YW5kYWxvbmUiLCAiYmFja2dyb3VuZF9jb2xvciI6ICIjMDkwYTE0IiwgInRoZW1lX2NvbG9yIjogIiMxMjFhMmQiLCAiaWNvbnMiOiBbeyJzcmMiOiAiZGF0YTppbWFnZS9wbmc7YmFzZTY0LGlWQk9SdzBLR2dvQUFBQU5TVWhFVWdBQUFNQUFBQURBQ0FJQUFBRGR2dnRRQUFBelQwbEVRVlI0MnUyOWFaUmsxMVVtK24zN25IdHZST1NjTlU4cXpaSnREWmFNYk9OR0hqQzJ3UWJlQTJNYXVsazAwUFJqZGVQM2VHNTY5WHM4WUhYRGFodm9BVXl2Qmd5NEd4b3owMkl5ZU1MWTNiWTh5cklzVzdJMXErUWFWRk5XVmc0eDNIdlAyZnY5dUJGWm1WVTVWMVpXVmluMmlpVkZSVWJjZSs0NTM5bDduejBDZlFMWW40SStiU0JvK25qcVQwdC9JZnV6MHgvSjFuNDBicDBwNHBWL2EyN2NOZnNNcGsrYkI0USsyalpwSHZzVDNhZit4dTFUbjY2NkhTaFg2STd2czVBKzliRnlOWkJjeHNWa0h6Rjk2bE9mdGZlcFA3OTk2a041S3crQS9hMy9RZ0ptZi83N1lMMm94MlFmUVgzcVU1LzYxS2MrOVRXaHZwclZoMFdmK3RTblB2VjUyMmF5eGo3MzdjT3VqNWcrOWRIZnAvNmlMay9TWDRZKzliZENuL29vNlZPZit0Um5LeS9vaWVnbGU1OExaN0I1Yjdod3pzeTZuOXU1Yi9VQmRGVThqNjBGTGdRTkZpLzJwaVFKd014ZWFIamlDKzFwQlFBWUwxam1JYmhkZFB1WTdKZGt0L2h4NTBaTUdoQkhCMG9rWm1CbmhiT09weXdlMTNoYXk5T3hPQnVMNmRCUjB3VjNvVlJnd2xVQnB1WDNKQy9wUnQ4aUpBQkI3WXFkTHUxamNydWtkeUc3VTJvdjl2VURrb3lDb0FNRlpOZStZVlJoRktjaUpqNGthU2RKT2k2YmRHNENicEp5SERnU3k2TmwrMGd4YzZ4ejl2bld5YlA1bWJuNzlKQ2tWKzcwcmpnU1h2WDhKaTRBalg4VjY2OXpBNjltL1RwSk04RXM5SWlHcDZWOFJvdkRzVHlLT0FFOXE3RU5DNEFTQW5yU1V3WWtHWFhKc0V2SGtzYk9iR2c0SFdva3c0MTBXTk9oMHRkYmtweUZPMUVXeHpyVFI1c25qMDQvYzNybTZUSTBlME1ScklVaFhVSDc4K29FVU1VKzVqYityVXpmeUlFM1MrTXVseGprV1MyK2FQbW5yUE9JNVljc1RLK2RRMVJVOStuMlpHaDNZL3Urd1QzYkczdnF0ZTEwUTIzVzJxeE5HMDRWMHlkbmpweWFmSGgyNmxIVlloMHc2Z05vczNkVnBSZlB3ZUVBL2JkeTROdjk0TTFNam1uNHBEWS9hZTJIckRoekFXSWNRSERlc2N2c2dsbmkzRE1RWnRBTHRhaHNaT2ZBL3Awak40NE8zMkxwZU02a2tIcUx5VXpuK09TWmg2Wk8zQjg2Snk4T1JseDROTndxeDVHcjV4Q3VQZmJ6V3RiK054bThpOW56MEk5WTYzOVo2eWt0RjRxMkNpNFh4UkM2WjM0U3dIdzlPdkgxMGFIcng4YnZHaGk3TTZZakpWM3BCOXQ1Yy9yRUoxckgveTYyandJQUhVelhkSE5LQ21ZV1o3YVVpT1BWQkowaDhNMHk4Q1kyQm9qN05mK1F0WjYwY2o2YnFlU2FYWm9kV1IzbWJaN1duR1JqUStOM0RlMStyUXplVktvRytCQ0x6c1RuMjBmK1Iydy8zK05HcXhXZzRvZkVqNGJPNGFYR2NsbGdkV1VEU0hyUUdZVzhUUVplSjQyamlIOFRtNSswdHM3VG8yMmVYTnVrYVoxMy9pSmRmZHZkalQxdjhtUDNSRHI0UnRTOGZlaVBPcy85a1dsSnlpb08vQVRNWmJ0ZGZWOXg5c0Uxd2U1U2s3c1VjTnVFZ0QzcFdvSFJBTjhxZ3ovbWhnMzRUWjMrQTUxNURzRzZhazMzTzNZWk5sbDFXNUppcG1YcldPdmtKNHJXMTkzZ05hNXhBQzd4MjErUjduNmRGWk54OXBtdVJGdG1tQ1FBVjl2dEJ3NkcyU2RCV1lvRGJYVUFiWjNEZWJVQnYxMGFQK3BHUzhON2RmcXZ0SFVLVVRZT054dEVOc2VRWXV0dzU5aUhZbmxLaHE3MzllMnVzVHU5OW0xK1lFOTU2dk9JSFloZmtxOVFBSlBhTlg3Z2xuTDZpMHNCNkxJSW5Tc01RSE9NNXphbWIvY2pPK0IrUjZjL2FLMnpVT2twUTNhWnBuSkZHRldpSjA0OVhoejdFR3REeWU1dkZERzM4ODcwNEhmRnFjZDA1aEFvUzNNZzg4TzNKNlAzRktjL2VwRUFlb0Z5b0RuRzB5Qi9VSWEreWRYZXIrMC8xdGt6VUprbk03YTJnY1M2MGlwMnl1T2ZER2UrS0x0dWQ4UDdXTnRXdStWdDBHWjUvSUZsT0ZDMjdkN2FybGUzai94UmhhYytnTlo4QWpMZ2JxYi9SQVlQSWZ4V25EbGlRUllhZnBabkxWdm12R0FBS1M3T0hNcWZ1WStqZS8zK2w0T2Q3TmJ2ZG1NM2wwZnVSK3dzRHFBRC83Qys2OTdXczc5bEdyYkMwL0JLQVZERnIxUHdiVEwwSXFaL1pMT2Z0OEo2RE9sS05ldWFnWTZ4Q005OE1NeCtQYm54OWVJUTB0RTRmVlJQUGJ4UVNCRXdTako4MjgrNDRSczZ4ejZvbmVPWGx3bGRTVWYzU2p4ZFEvOE9QL3F0TWpEL3c2dUNXT2s5YnNlTDAvMnZyQUtSZUw3KzR3R2tPMTZ6KzYwVGU5NTJadXp1ZDFkR29TMENIVzdocWUyeSsxZTUrc3VZdlQvT0hyS3dxY2I4elh0VVI0dTJRRnlmK3hNc1V0TFJlLzhpM2Y1U01vcXJuZnJJRzhySmh5bXBhWG5aSjhOdFdmUlVFL01kYm1BTThvYzZNMkVxdUZxRHRhd2JRMUtkdHlqZEZ3QW82VWUrNGQzWk5kOW1OZzN2TFhYWnZ0ZVZKejRSV3ljQVVIejFtemwvWFY4SDZpbzlOZkN0TWpDQitFRnR4U3N0QW1sZG1yVXRmRzhBYXJ0ZVBmcks5eVFIWG04MmpheE9EL09GMzNhZ2R1djNobUxhSnA5RTdHeStoMzhEV3hOdEpMT1ovODh4dWpkSzdTRXRuckJTTnQwUmNYbTJqY3VjSDRSdnVOcE9QM2lkRzczTjc3Z25HYjhkNmFCaVJyd3pMK2FBMUpremN6VW1OWjE4TWovOFNUdnhwWGo2OFRoejFEclRXc3hxYUc4bW50eENmWTFiZ2Zmc29Qc0hySDNhT3M5WldCNDlWMEVzQWVlc1hIN1ExYmI3eHU1MC9JNXMyOHZUbmEvS2R0MWxXUWJPU3MyejVpMFYxQnpxemhJeEY3S0J1aHZlSFJzN2FyVlJ3aUhremt4anFiRzFtUURpbHBwS0EzYlMzY25zTTlxWmhhNlA5MnlDb3IyTVBGM3dKeEsyNXJITVhTRVp2U1c3K2Z1R1h2YlBwZFlJc1lsYWdsU01hdUlzYVJSZis4dmlzKy9KRDkxdnNieU1jb05iQ2owNzZHOWg4b0IyY3RqNmxCNlpGeFdrbC9OWjVnMS9kYzd6N3EvSXJ1ZWlseXJpZDkwNTlGMi82M2ZlQW0xS0lrcEMvT3hmdnIzOWhkODdkMzJ5cXdrWkxxTStkSm5STXdhNVh0SXZhMTZ1RnowVjdhSlgyS21MemRXNVdGWUV3QThkMVBacERjMTFuZ0VvcERNdFpmejYwWC94aWFReFl0cXhiR1RxVC82UDRndS9TL0ZtdHRhb3RNdDhqTDhVY1JyVjFBNUI5b24vcXVaaFhaTmRoWlZsNEx2U25iOVkyL05qMlZnZDh1bllrc3V6SFpnTlhyUHQ1YjgwOEtLMzF3OStaMndkamJPSHVCNFBxTUdVTHJIV1JHeFBEdHo5UFQ1TDJrOTh0UFgrZnczeDBIaFptQ3d2WVBtYmVsUmQ5TU1NM0UzL3BKWmh2Y2QxQVEzNDM5M1FUNmJqQTZJcCtWTzFIVzl3ZzlxTFh0M0VDU1pnb3kvNmw5bTJsNk9ja1d4cytJNmZrV3k3bWE1dkE1b0dVSW92L1hIbitDTVlURHVmKzYxNXZzSExZMjlZUDRBdXhaQWR1SlArT1NzdlJuSlZLM09ieTZhcGhXblRZZ0c5eldXWFFVaWJVcndNN0kvNU5Fd3RQNnVTc2I2N2g2MTFYTkJJWWRudVBIZi96T1RaNHJHUFZaeHA2eGp0THJOQ05BWTVhYUc0T0wybnB6MnFtdVpBTUtocWVibG0yV0JoMXJTMGtGc3NxVG1wRjczdGlhTmY4YzgvWXAyWlhsN0hsaUIvcVJuTThqUUlhVUx6VlI4ZUZtMTJQMWY1SUJoeXM4S010QUNFM2l6TGtqb3ZWM05Mcy9PK3ppWFpzeGxoSUxSc3MyeVpGZFk5a2MzSk43RkY0R1lyOFNBRExKeDhzano4SlFHTjdQNkN2T3hJOHVzN1gyd0laV0NFdFZkM255cjBKeTQxS2hKbUphd05LMkJpMW9MbDFzV2xYb3hNdGd2ZjIwcGFrTURNWWdFTkJxM09TcXlRc3ZoNkV5SXdYUm9OQmlCT0gyOGRmbEJobkZzZHM4dU9JYitaNnM3NWdDRGJxek9RekVXTlplQmUrR0dLQUVJUUtBMm5MSjVraENFQUhVTXdWY0JWU2MwRXpLNW5NZ0tuWFNXa3lnaXI4cmxvdmY5V3dZSktHbWdVaFNpaEZLTVlxSkFJR0oyU0NvbVVTRkhTSUVwcWhReTZ2SGxZeXltWVdjd1IybWJSQ05KMTU1T0pIendJU2VrOFRBMEd3dkl6c1hrTUdnR1FEdWZjOGhkUVBzMnBZejBqRS95MXIzRGJiOHkvOEFjUVYvMThhd0ZvQTgwaFMrbk8rU3JRTXhjMWRvZlVmdEFOdjBacUE1QVVOS0FFSXExdWZGK2MrYmx3dWhwSGdIWmcwWkFhSFFsQmpQaC8zYlp2Y2dQVE5DRVZqR1FFb3JoQUtVVktjUVVscHhUaVNycGNmSnV1UTErNnBDMUpDNjVrRWlScjA3ZnBDc2tLeVRxUzVKSVZrZ1pKY3ZFUmlGQkxkNXg5K3IrMVRuMkNFTVJnb1dOYW1vaVpneG9BU1VZSGJ2dHBTYmZEWjNCa1dyZTBRVFJEKzdueStVL2xqLytKdGllcStJM0ZkM1Blc2pQSDU1UngyWGx6N1h0L3BYenN3OXFjdUl5SlBuNURaTlk2MEJOV3dYa3I5QXhTZnNGdi83NXN4QUc1aGhLU21CWkFOSlJFQ2paNnA1dEN0YlRZTVF0QURWcWFWcVVWR3JDRVJwakJqRFNZVVFLc01CVHFDbWdwVWtEYUduUHh1V25McE1PWUkrWVdPdlE1UW1FaGw3UkRuMXNvdEN3bExWa1dURXB4UVpMSVJFRndTbU83cWp1bHNhQ1dwZ1hnWU0wcU41NlNtaHNnemF5a2EwQVNJdEtuZnZ1ZC9ybzNaUy83c2ZZbmZ6Wi80cThYUTRNQlFENnI0WEF2dFJweS9jdHEyN2J4VGYvbTdIMy81NUxSK0pzSklOdG9Ick1NNlNyUVU0bXQ3WEIvbnUyNzEyZlBVeE80ak83UjBEbWlaUTdRa0VPTmZEQjJxdUVGMDVaWkRsTmdsbWpCQUFqNVJjMW5BbVlCa2taRUlJQktCREJTQWlXSUM0VFM1WFFGR2VsSytnNVowa0hTQXE0TkJ2RkIwaEpTaUl0TVNycVNFaVdKNGlPY21rRjhMTTVVK0xIWVJxakJBc3haYjNFdHR1THB6MXJXTU4rZ2MzREMycURiOFJKcDdMZGkwbVdEQTkvNVgvbXBkM1krOCs1RnBaS0dIS0hvNmRSdzRqZ0x1ZVA3M2FkK014NS9aRTFNYUFOWDAxOGlIbk9SVjZ2MG5rSEtuOVgyM3VQclJ4aEh6SDI0Ykw0blRONGYyL2tGOEhOZ3BFV3laZGFtQVVoNlp4OHgrMlU3dTJrMjIrNDVNUllXYzBPRUFyNXJBTkxpVFBPeC8zVGVsLzNRWG5mOW03TzdmaVFaT1lBNE0veVcveWhXdEQ3NzYwdndJUU5RbmNGYWYvc3UzdmlXYk9DYWdkZitmOU4vL0k4dWx6MXZpNFlYVit6bjU1UHRyMDNxWnlYc2tQVG44dE52Nnh6OSs5REt6UVJ3Z014N1ZTdlVnWFdBMHF5QXpZbEk2NlVFTGZyaWNpK2U5Nm8rNXRLLzROeTVYRnZRRWhwZzBXS25weU5MTjNxd2Uza0JHV2FPZFI1Kzc4eDlieTBtbjVDaEhkWTYyZmkyZDdxOWQ4QjBLY0ZrcGliT3BwNHZQL0Z1WjFhNzRkdVNmYTlZNXZ1YlowamNPc1pOQlY0bTJUL0xSby9EZGpINTVlTDBmeXJPK0hrSnk1VWZTSHNxZHVXS2ptYVJGbUFGYkJZMloxNnkzbUgrd3BjdDk3THpYcjFiTGZtTG5uL0JUTlZNVFdQUGcyRmRhNmN0dUh4MWVJTjRtM20rK2FmZkg4NThGVFdQTEdtOCtlZFhNRnViZ2xKODVuZks0NCtxcE5uTGZteExXS0szRFBzaGdCOU9SeHVKYjRoOHJ1ajgyOWFwNmxnZUYzTUN6Y1V4WkdRMDY4QTZoZ0NJbklzVDN2QTZiVnhSamxtRWxhckJVS1crWHppSUhvdlVBUEZ4OXVUTTM3N0RzcHFMemNGYlg1OGMvSWJsbUlvWlNNdG5tdmYvS21Jbk8vaDZ2L1BPeThLRVpBc0tyd2lyZ2E5eUF6TWFoNVBrdjhmcEFrWndSY21kQXdYUUFRTFVtNVc2V2dQM09uU0NaWCtpR2d2VHdqVEFJalJZTEZhNG1nWlF3ck9mMGVNUHVWb2pTczNmK00wQTVnREJ4WmtReTYvOFdYbnFTWkhoN0tidld1OWV1T29BQk9BR1NmYUxqOEJNMUUvSEZyRklSYkFMNlJPeDNTUjNpTjlHZjFMMXdkakJ1aUpETHU0QmFHYjU5Q09RbEg1UTByRTQ4MHpzbkZqeDZFTUtZZmxUbjRoSnpSaVRhKy91b21RcHZKcUJZdmxzNTh0L3FLR2Q3TDVYc2xGWTNHUU0rWXRmYjdzRUFOcE9OMHgwREpObGVTeVdLOTZpVWpTZXMvS1hpOU92ZHdNdDJOK0YyVk1JWEdPdGhRMElrakFqVUp6NWpNWHBkUGpXa0Uva0U1OWQzYnFhQVdIaUdYTVVOWTdzbmcrZ0pUVWhvSGowVC9TbTczUDE2NU05cjg4UDNRY0tMRjR4QUxKTHhZY0lRS0JZdFhHak9tMDlvY1VUV3F3UDNCdjFMTlYxaXFsSGk2bEhWMy81cm50VWc2Y29TZUZxd0FxS3paN0lEMysyZnVBZkpydGVreCs2YnpWUlpxdU42ZDdLSW93ci9WUEJDRmxUdVc1YmVENjNqUjdrR2tXWlZLODFYVWJMVG9qUnpDaXk2akV5ZitJK2JaL3dJemRKZlJmTVZyeWpiZHd1OHBkVUhxMytHUzZNYzNNd0drek5HVHhJVmc2bFZXM2o2ajFYdDNKclBxRE44MzhUTkM2M2w2dnlVc3R0MUxsOGVIRUE2UktzU1pKYUJCQlBQaEFtSDBzR1hwUnNmMlYrK0s4dVhvcXRIZ21YT1I1b3lXa2hsSWhBQVU1Q3c5b0daNWYyZ1d6KzJ5VjdZNncyeUtMWHRLVXlObG9vQ0VlR05RU3IweUVXNWNrSGt1dGVuSXpla1IvK3F3MVE1RFpFQjdxODJjUUV6T0NjL0VReVhsb3NqUlZUaWVoV3IremFoSGpPSkhpQm5iRHIrWXFnRVFvcUVDa0tSc0JJUmM4NTN3M1NvRUVDWUJTbFJEQ0NDaXBGZ1NxUW8vZFBLcW1nZFEzS3JwZlE3cXIzSm82c3FrODdpRE9TSXFDRENDaHdRdWZweE1UUmlRbmdSSVcwVUx2aEZacTN4RHVOdXFibExwKy9YL2QraDJ0Y1ExZTMyTDc0MVZ2bDcvM21LOGlyTzhwVW9JZ0Q1RTlsMjhXc1VCQ3FRR0VXRENVUW9KRW93UklXZ0FDVVFBRUVkdCtVUktBVVJBa0dNZ2RMTXErOHAyQ2dGR0FITENrbFhhVGtrSkl1VUVxNGtyNEFBMTJzbkthUVFJbHdTaDhwa1Y3Rkc3M1JtWGhLWWt3Z0NWd05rcGlyM3FRVWJ5NmpTK0FTdUpRK01aL1NwVWd6WmpXbUtkS0VTWXJVSVJWNFFlS1NGRmEwVEliWEVDWm1CaUJPUGE2elIxMjZXeG9INDh4akZ4OW90c29meTZVeWgxdzBsV1lCSnFwaWxnTktOV2lBUm1oZ2pJd1JWa0pMaTkwUHF4Y3RoeFhRQWxyQVN0UENyQVNLcm9NTVdsbUlZVGtzaHdWWWhBVllDUXV3d21KcFZzS3F5d2JUWUJwTkkxUUJKWlJWNmQ3ZUZIY3prNFVpRUNHcll0R1Yra3lqUUdqZE53SW5jTTZxTEhkUGN6UkhTMkNlOE1KVUpHRXdNelZXVW56MUFwK0NNRjJlK1RKY3pkV3YyY3dGOUZ1UC9WU3lDeEVXUVlQOWVubm1sRVl4NjRXMDJweHZhNzVIVEEyUlVDQ1NDb3NHWlRkbXd5cmhCUmdsQWdvR01uYUZHcFdNM1NnelJrQWhSb2xkNlNaR0tzUkE3YjZuUVVCUkNpaFdDUy94UU84TmhlSk5QQWlqcDFSaXk4TUp4QmtCNXlCQzcraTlpWUNBZHlERk9kTlNkcjI0L3RMdkZsV3VqVnNRUUp4NkZEdmY2T3JYYnVZQ2VtdzU2ajY1RW1xWVZudFhPRlBxQzZXTFczTDdkOVR2K1FHRXVDWUJWSW1yT0h2SXlxYXI3VnlMRHI5eEFOcFNCWGlxT3U4d0xVeUhqV2NYRE0vV0pMbDd5Z0FYTlR5dWFaWE9YNWNMYWpwZGVFRXV6TXFZKzA1VmRtRkJpUUp4cHNyR3VLZ2doaGpYY3V3MEE2RHRJN0Z6VXRKdEc2VkhydzFBVzYxR3Jwb1ZQZkVVTHlacmJPbFVDbHZQZGM3N3hGYit5bUtmekxWY25ZOW1hRVFJRmd4Um9XdTJvbHVZaWUydko0MkQ5QU1XMjV1MzFiY2dhWFdlTWhOYnhsUzNXbE15dDJZbElTNHlMbE5WamFaS1hlT1FLWUJwK3lpa1FUZlV1LzdtQW9ocnRjbGVPZ0NabFdacVZXQ2hyWWdTcnQya3lNdjZ2QlMzZUdrNlZRUzFDSXU2anEyaW5aTXdvMnRzMmtxdHdSSzlWcmYyaFZCZGk2K2JDaXRneGJ4U08xeTZQQU9BckxmaU9uKzBSRFN6eGNabTNlZnZscWZzQmdpaVc2ZE43Wkpwb1NRZ3BqSGJmNXNON1N5KzlqR1FuTHVkMFlJeEJDdkRPZ1NzNWFkZ2thNStDVS9JbTNBS1cweVJ4QkJZQU8zVmFqTldSUlFYcG1iTGNaR3FMTlVQSnVPajRxWmdBV2hCbTEwYkR3TXdaZUZRN0J3TzdmUEhRMzlQTmpibzB0STRDOHZCRXN4aEpRaHh6VmljNkp5TUZqWllFZTJtZmNYc1ZUL3E5dC9XK2NDL0kyVkJick1CSWFJb3NSZ0hXbkV3VnA2RlJianMwcDZRTDhzeGZnZjlyRmtiWVpVRDdSaUtoUzF6RjJYYUF2eElzdTM2Tkp2UU1BZzJZYW1KRXJTcTE1d04wTi9taGd2VEV6SG52RVQ2VjZSakI1TEJTVVF4ZWlCMmEzNlRocEtzKzJSYnR2Tms1L21ONndOUGlFQWpzNkhoZi96YmZuRFhtZDk0aTVXdDgwM0dhbFlFaEdoQjF5WUVxanp1MklHV1ZXM3lxMGVKcnU1eEhiTmQ0bGV2V3lpc1kxYXVoTE1NY2tCa3hrTEhyTk8xTzF0bFRjNU5Tek0xQ0RBbXlmeGZlWERNSlMxb05IVE1naUYyYmQ5UXNESkExNUpCdDFFaHh0VjFOS2JYZmRPT24zb1lZemVkZmMrYlViWXVyTE5oYWxZR0t4WGxldHpwWnBXbngxYUg2Q3NFUUpXV2NhL1VibWZHSlNvKzhRTDBGR2JheXhKY25tYk4xS0JBRGdaVWVZUG4zS3NHSzYyYm9USC9kZ0dzWHBVLzlaeEpHakFJNkpUTDZkbHJtSDF4TUtXNHhodCtldmlmZjBLYnpabGYrK1pZdEcyeFZFQWFXQVlVQmNLNjRqRTBod1d1TGdodlE0SjkvYVZIVDVlK0xSMjZUb3ZmajFPcmVSZ0RDMWlKZVJyUTBwUlhXdzhXZ2NJc2h3VjJmYXNScU1JVG85bDhOYUtxME5STFVaVUlDMlNFVkw5U2lsS0N4V1cyOHVyMk9BR0JSci9yOXJIdi9PWDZTNzVsOXNqWHp2N21tN1F6QlJHb0xsQnJxdjlwMUtKZ0RCYlh4NEVVV3BqbW02TUFYVm9BOWRMNVdNSysxdy9kNmRMOTRtK1M5RWt0MG5tNThZdlhPekdMWnJsWnNYSWtxQlZRd29YS2FRb1VRRzVXd2lKWWlhVEt2Ymx3RnFna1RHTGxZZTJoSnhpMFYzbERsN00vY1M1Y2JFVjl1WGJuRHpWZS8yL2R0djNseEpIcDk3MU5aNDdOejF3K2YrZW9JUVRFa2lHc2M5NjF0QXNiUmwyZ2huUHBROGxXRVdGVitsOEplNDFydkR2Ym1TUFVSZDVYMjNzejA2SlhYSFFwUTIzRk9RSlFyT0tCaWlwM3B1dFIxeElXekxwbzZNYnhNRjdBZ0tNeGNNN1AydjFPeFh1NlRsTzZwU1d5V2VVRFh4WTlyckZqOE50L1ovQmIzKzFxSTNuejVJbi8vajNoeEtOY3ZocExqQ2hMeTNPVXhicE1CQTVtaUswNXRYcjFoakdzNjd6cE41enJlREFCNnBSUnVCdGQrbFkvK0QxdWtJSVNNT2lkUHYzUTREWHZ6YWMrRldhZjBYSUdtcU1yZlJhSVBLTDdPVmZrcUl5QW1aVkFnQVVnbWlrUkRZRVd3QUp3OHdMTk9aYzhTaWk3TE1wUUlZWUc2Zm56bldLUnNwaVZ5V2F3Y1VBa21aNTlacEdleTVWZWJESGQvNXFCYjNtMzIza3JkVXJUeHV5Zi9yQisvWE1RYnhxV081K3JXdEZoTEhWZEFBSXpNMmlZdlR5R3hJdmtaZ0FjT0FwdWg3dVIyY3Q5NDV0WmYxV1NxdWtwb3hQeFprM0UvWkw4WkRyMldzdittczBIdFgzU3dpbkVtWVVTelF6QlVNTGlTdmtEN1BvOUdDcUJBWUNNc0tvSVVObkxadzNuR2R5QUFraTZjcTBxSVFXRFdCVjhDQnBkTjV6WnpqOE5qRFFPM25MRER5TWJlK2E1UHp0OTZuNVVoZXQ2SGI3Tklpa0RkLzFrL1o1M1dPcXRmVksyN1puOWl4OHFILzh3eEVQREN1cUZLY29DV2pLdVI0VFJwYWJSS2c1MGVRRzBQdXRIZ0oyQ25ZSitUY3YzRjdNL0M3d3kxUDVOTW42dkg1Z3hNMkJVL0c4WGs3L1ltVGhjcmVtUzZHQVVCRnRPaE0xQlFZR0NWbGhYTEZaSHNBQXJlN1drdUpoYktJSUVoYzZBYUlDSVdsV2hUTG90dXlXNW9LUWl6YlNlN2FpbFkwM3RYSHZEUDZzUDMzcjAyZDlUTFVobk1MUG9CNjhkdXVlZC9vWTNhSnhHS2R4eFlPb0RiODhmL2tNdXdYc1dFL3pSWW80MUE0aUF3UTFhYlBjQXRCbis4VXVpQTdHblFSUDRiT3k4cFhQc1EyRjJtSllSUDljNS9lUHRFNGN0VkF1MVZNNkxHb0loR1BMbHN6bUJISG9zRnFOVjBZeWVzbXhkY0ZCSUoyTEFySmJ6R1VrRW1sclV4VmNhdG9nSFBjV1RudUloQ1NRclExc1hLaXRtU3ZMNDVCZU9udng0bG82VmNXYmJuamRjZTllL3p3WU9ta1dZRGh4NHkvaTMvSkhmOTQyV1R4Z2RSdmJOZnZ4bjg4Ly9KbGFKSGdDcWlBR2huQU1RVnovcGdDUmpXa3h0VG40cU4wUUg0aklSQ3dDQUJDeGg3OGhQdmk2NTlxc3hmMWMrNFhwcThuTFpTVVFPNUZ6WktHYkFSK0xzcTJrTitobFlDMXAyMCtPcGxOS3NBQ1pqZXpibVdCaFI5Slg4ZEtCQWtod0k4RGxRVWtveW1CcDkwS0xWT3JMb3c1Rjg1c2hmcDBNM0RJemYxZFpXZmV5V2ExN3huMDg4OW10Ky9QYmFpLzlGUUF1aGhYcGRodmUxSC9pVnp2Mi9DSEhRVmJNVERTZzczZGpkdGJNUnB1TldudW9lRTVlMmdHeUlmOFkyQkVBcmpxT0VPZkN3eFErV3JTOXJZUURCc0xLRDNRcWlZNHkwWlI2M2lzeWF0dmczNWZUcUo2WDZXa2ZEUTYxamF6ZTBWTVBSSjUvODdWdnZlcWNmUEpocmsrbllqbnQrcWZTMUlrekRKK1lkaG5iblgvbXZ6WS85UDZRejFUV01hNjZla09vNlZzTDVvZGg4ZXNOTmlPc1JZZHhvZHZlUjBQNWM3T0NDTWdtTDNpZ0NCYXlvaklTcldGRXViSEs4YVBmYVJlWHMwc1BnMGlFaVJrb29wNTk5L05jTW9CK0tjQ0Uybzdib1V4TnlhRy9ueWIrWStic2ZSMWU1WHN0NmFXUU1pSVd0dWZCcWRXWnN4UGJocGM3d0cyVVRYaFdBTnZEK2xiZjVLOXA1VGd1c2xKUGFVOGJSZ1FWWXZwYVpJSHRCV2d2ai9ialNBeTdlL1lyTEdYeEoxNXg2N1BEanZ3RS9ab1M1ekZ5aWhCdlpHNDcreitiZi9laThXbEpybXF4Z01ZY0doTlphRjVkdUVJQVdKeStSQm0yTGJiek5pMGc4WWVYVXF2TnRyV3RUWHRVUGJKNDNRTUFMTGNTMjBpWlp6THkyUWtDUVdTVGQ1TkVQbm5yNmZhNiszVWdWeDRIdDVla3ZUWDM0aHl4MDFwbVpKUW1ZZ0I1U1h5dHprSFM3bFdmTXloWGxCeThPUnJZNXJvejV2QlhBbVo0dXNNcVdCaEhkVEM1YlNZVWZwTHpPall5S200RjJEQ1hacXVLcEtTWFJBVTdIMXRsNUc1bzlOLzV0eVVqRDFkcXdqaUh2NWgrNlFERzZ3c0pVNTNsZFZ2azFVMUJPUC9GcmZzZWQyVFZ2b3BmeTdHT1RIL28relNmWFZialpBRmpuVkRqMlllMDhyK1ZaOXNxZnoyUGxpODhmUVlPNWRJZDJubHVObHJ5QjNHbnpBa2M2YTh4dVY2QTZUNjFZL09EYi9kamV0RDZGT05STlZXY0Q5RUFnSFVoZ3Q4dHlpKzFlUEZCRkwwdkc5MlhEVXpReEFpWVFSeWxBUng5RkhGd2twNXRmWDJtWWhObXBCMzk2eDU2WHE2YVRmL2RQdEhWaThXTGh5ejlFcjR5blRqK2FUejJxeXk4M1hhOStoTkZzcm9PQ3BOdkxxUzlzbWdWb3N3RzBWcWJWQWNwNURWT1dXc0FhdU5jbFRjUzJXazVXTHJDU1ZvS2xvWUFWaEltcnUxbzc1bk8vOHVDSXo1clFRcEVUc1J2YVViMUJNRlBFeEkrSStPV1pVRldXTUxaUG5QcjRqOEJDbkRsVUdhUFhBSnFxNjJBdjhyc1NFSkxVa0RZZ1RsektKSUZCeTl4Q2pyS3RSUnNXRnhna3FpSXlwdVgwbDJKNStvVUlJQzZpV1Z2YnJJQ3Rwc3BoMDh5TUJwYUdDQ3BSMVVVSVZTVUdpRWpDcm1lMGV5dGhWUUNrU2tXbDBTbEVlOTB3RERSSmRKWGFnaW5BZVBvTFBWTjFYQWszMGcwbjZZR0c5UkczL1VhLzgxYlpkYlBiZHAwZjJTTUQyMWtiWXBLS1Q1enpBRFJHelR1eE00UG1wRTRkTDA4ZkNzY2ZEY2NmaVJOUFdXY0twZ2JFL0ZqRmM4MnVLQUN0YUlBUndJUEZXbUpyOUp5UFlza2c2cmxZZTJObE9heCtNc2RJcW1vYlhSZXBuVy9wTnZRY3FJQW9SU0VHVWRBb0JqRzZ0Y1RWV3pmbWNCbTlaKzRMRmdGSU5peTc3M1I3Ny9GNzdwR2RMM1lqZXlTdHd3c1RMMUlGbTZqellGVTkyRUNCUzRha3NSTmp6dlk2WnhMTHlIWXJhWjRvanozY2ZQcGo0Ym0vMXpOUGRIdTEwRzFhVTdvTkFKQ3Q0Z3Rqa0pPSWEwdVZJNEtoNkoyR2x2R0pWZlZaSXF5WDY5NU5nRmRRcFFvc0ZKM1g2NnNiTVVKUnVxb1RqMUxNYUZWdkhuR2dVemhEV0lNc1dISzFLam1sMVJkY2ZWdTY1eC80ZmE5MnUrK3lrV3VObm9nd3Mra3BjMmVaSmNneTh3NmVkRFNGQ1VGZjFmY1FPSm9FaFFaRnRFVEUxWWVaRGR2Z1RRTUh2MGZhRTNMeXdlWmpmOTUrK3MrMWZhcXJLcTJxcWNUNjJRUTNKeUxSZ0JvbE0xMlRIbDJWMXdoTFp5RGJPV00zck1zNUtvODZLNCs2VXBRdUFoVGZyZFRjTzFrVEVJclNxYUhMZm9RRzEwVVBYWTlwWFVST0kybW9vR09VTk50MlQ3ci9EYkxqYnRaM21uZ3Iyelp4bUdrTldRMXBqVklWWnZCbUFUSENaNVlPV0swV0hSa0w2VXpxMUVtZFBxbFRwMlB6ckhWbVlSU1hlVGNVcGFIcHRxUzJKNm52bFlOdnJPOTdZL2F5bjR0UC8ySHpLNzhlcHA3cXdtZ2phbTR1RlQva0x6VjA1a1RHZHJvanE4NlNVU0EzbEliSUpiblBYRkhWMkl2cHNhcjBFOWd0cVNGaUVBTWhTUVdnK1JsQ0NqRTZJNnJ2R0YzM0piN2lTV3F5WGdDeFowZXlKTnRWMy9scXQvMGJaZkJncEdxbnllSVFzZ2F5UVNRcFJLeGlOVEdDUUZwSGZZZzFienFqcHg3cEhIbXcvUG9YOWZqWDRzU3pPblBLd3VJUlFrS3dOaVpEQjl6b2l6aDJaMjNmNnhwM3ZpTjd5ZHZiajc2MytjVjNhdXRvVjRCZUdvbDJDUUUwMzZVNkRYMEoweU1XVnZtcktwUW5BSEg1TG40OXRIVjd2NTBySDlhdHZhS2dFc1pLbTE2QTZad0FHWTNXTFN2bWpHTDBrVTRCazlRc3JIZlhHSUQ2d0EyTmJhLzBJM2VGZENqRVpweDlEcjZHYkJESklPZ01paW9ISXhTa2w0RnhHUnN2eWxQaGlZL0ZwejRTbi90Y1BQSGtCZDZNN3NGdFh1MUhNNE9hb2owWjI1UGx5UzhEZjVLVHM2TzNKQWUrclhiekQ0MS85eGM3WC9uVjVzTy9aQlkzaWhWZGhsTVlnV25vS0dXUU1ydlNQcGhiNDE0eHFCVlU5Zm4xN2FwU1RnYUNybW8yMk0yeUVOR2VlNndLUjFWQUtZNWVBS016ZXEwQTEvMmhVL0Ztc3I0cTB3T05HNGJHdjBrR3I4OHQ3eFFUaUZOd2RTWURFRzltbGZrUmFnZ0Ywd2FIZDVodmwyY2ZLQjk0Zi83VkQ5clU4WG04eGMzaFpDNmhyY3E0dUZDL0oyR29XaVBHY3ZLeGN2S3gxcGQvSmQzM0xiVmJmM3p3alIvb2ZPbm55cE9mWHQyWloyMXEwQWJVU09RcWJIMEt6SmkraE1ubkxCZXNxdmRTSlp2Q1BBUEpvbGN1WVZNYUR2akdhU0NJRTRqUWtZNXdFRWRBbkZlbUliVG1SQmhCaGJWanNUUExDbFdwQkJ5ZDBadDRBMDA4WE1NNkoxY1R4Rk5aZ2FzQmp0U3ZHeHkrRS9YOXVmaXljd3pPdzQrQUNlZ01Sb0lpYXNxeVlHMkk0M3VpblM0ZSs0M3c2SDE2OG5HYk82eFZZYk5tMExpdzRlYzhtd2FGVEx1RkdhdDZnS2FzMHRyUTh3aGFMSTUrdERqNlViL3pWYlZiLzZuYmZuZm5hNy9SQ3hXeWRZdVVEZlNLckEyNWUrQytXeHEvcmpQTG45MHFlTjBnMlRja2c5T21IYlA3eTZtbFdzcFhIdzdRZlVNMm5ycGFUc25wY2tvSFV0QVZaQWxUU3JOenV0VStjWUZlNzI5czdLTWZLT2tMU1FxNlFseEJWbDNvVk10eThwRlZCQmQzeHpXYzdoa2J1Z08xWGJQV2loUkszVndOdmdIZmdNdmc2NVkyNERNNGo0RmQzSDVBNDNPZHgvNjBmT3d2clRNMWg1dDVmWGZQYnhGRFB5THBic2wyTXR2SlpJUitoSDVZMG5FbTI4eGFGcWFzbkxUVzQ2RjlWR2VlMHVMME9aczF1cVdBMCt1K0I5bnU4dGsvdHZ6MEJwWU8ycVNTRzlWNGY4SU4vUy9MdjZURk1reG9Ea0IzSjRQVHBpWHd5ZkpzYVd0SXRWeGY2OFh6QWtKc3RZd0hRMzVzVytOR1pydGJ6aGRXZ0FuOGdER0Z5OHdQd0dYd0dYd2Q0amkwVzdaZlZ4Wkg4NmYrcEhqeXJ4RExycHl5K1RZYnp1TXlLZE5kVXI5RzZ2dVo3aEUvQklDU3VHUU1mdEMwRmR1SHJQMTBtSDFDODFNSU14cUxYdWlEbm0rQ01nT005YjF1L0tWeDRrRmJSZStPcldXSnJnYjdnQlhmTG8ySHRWaXh6cjcxTEJpMGxhc0R6ZUZtYVdSdzBUcFRKT2UwaVF1NmV5K0p4Z282Qmh0MEE3dHExL25hcmhscVI4OENHVmt6Y1ZVUlJlc1cvb1hGZ3JYdHN2MjZHSTYzSG5wWGNlZ0RYYmlJZzJvdjh2RGNReERDYkxjYnVGSHFCK0VHNldxQWtxQkxKUjB6YThYcEI4dXBMOGZtRTZ2TnZxaHVSMmZ0WStIWWNUZDRvNGFXYlZEbXhpWUJxTm9SWDlUaUIyVHd0VkwvdUxZWFpVSnpsUTlpdHlWNnI0M2JSVmd5bHpGRDJuTG90S1gxWkdzdzNaZnVxYVc3cHAyZjBpYm9IVk9GTjg2REhRa3J3Sm9idXpGNnRwNzV2ZnpwKzFDRlp0UEJMb1FPS0hVM2NJTWJlQkdUMFc1dmFndTBrdW1ZWk9OV25DMU8vSFU1K1RrcnArWlp0em12N3VqeUV4RUJ3alRPUEVHcGJaUUkyenhmbUFNNnNJOWI1L3ZkMEFQYWFTNWI1MlhXTk1KSTFDQTFTbW54RXRYN3M3VndVQU15dW9OKzIxaTY4NnpManFObDBWRXlPRE9pcTlMQ0VWQkVRS1MrRTQzdG5WTWY3eHo2SDFiT25qUHJYWEM0cEIveWd5K1IrcldTamhoQWk2Q1pCVWxIZk9PZzVpZnlJNzlmVGo2NDBDdGk2NHNZQVdEYTJVRFpzcWtlMDJIS3I3bHRENko0ZDVoeTg2cTNuSmR5NjRGdlNVY2hyZ1o1S013K0Y5cXJQTHRkT25Pb0F3KzY0UjErck9YckUwUUVTYS8wS2g2U21xVEdGTDRHcVVWQTZudGs0TnA4OXBIMnNiK0o3ZWNYc3dqM29PTUczZUN0TW5Bei9SQ3RwTGl1MFM4WmNmVnJyRHhSblBoZ09mbkY4N1FaYkJseW0za3pBVHF3T3ZnRGJ1Q294YWNzdUNYT1ZncU0wMitYcklBWmVDem1sd1U2YzNTZE5PN3dPeE0vZEVUaU5GVFFLeEl0dm5KQm9IcFB3TldUZ2YyR09IdjRUOXZIUDJ4aHRuc1VXcEFjMjlXUi9mQ2R5ZmlyWFgwZktFQ2twSlFVQkJ2WHVYU3dPUEdCem5QdjA4Nnhjejc4bFpLY05wODJOWnlqVW5IZXIrMDNhdjMvY2lQSExENXFoVnVpaXRSanNYM1ExWTNZeVdSVS9Ga05tMWFJZUw3K2ZBMnptOTF3OFBYRHNCa1VEdDVEYkVIQU0wRm5kQ0JkT2c1ZmI1NytaR3Z5ODkwT3BtYUxNUjY2d1JlNW9aZElNZ3hUUUNFWks0ajRBUm01UHA1OXBQUGNIMmg1NXB3WHdsYmJxdWhxNWtCem1sRFQ5QzJ1ZnJlcmYwSHpNMUMzV0ZXOHFtUEJEYTRHd1FpVHI4Y2NLK1JSYkF4MDVtQjZnT21yM1BBT1AvZ2NlUlFXQVZlVm95Y0JSMG1xQmdhVkE4NG53MGw5YjZkOWZPckUzeGJOWjdvQkhndDBsRjRmKzJ4bnN1MjFidWdPdXJTNktsME52a2FZRE4vSSt2Yml1ZmNWUis0emJZTkNiS3JBNHRZSFVDWElua0c0bnVuTFhYWVBzd2NzUHdQMUY2ZzRCTTVZU01DOUxxczVsMUtldndCREd6dXF1WVc2a2VtcjNkQnUzemdtY2dpV0F4N0NxZzFQMWZpQzN1am9Fb05BWEpLTXFKVlRaejdkbkhyUXRMaEEzSFJoU2FrbFk5L294NytSZmhCV3dubTZHbHdDRVVyaXh1L1E0bFRuOFYvVW1TZDZ2WGF2Z1ByOHZGeTMzRUgzTzM3SFhuRW5UZjlsT2ZHb0ZmNkNkTldLR2J6WU4xN2tCN3k0WjBQNzRYSW03MjNyamVwSnlIbllmVEhTTzZTV1NQcTA0QWcwR2p3YzZHTFhRZXNyeHhra1VSR1RKUFhieUhTcTllUk04NGtsYkpuZFlickdqWDdzRlV4R1VHVk5pRlFKMUVCRU1pcEQxNVRIL3FZOGZOODVtWFdGME9VcHdGM3BQYStTMm45SnRrRkV3WGZtWi81Q1orZitkTjcwajlEZjRodlgrWHFBUFZ6T0hvbWR6a1ZQc2N6VGJGUHdwY3p1WU0zUlBTYjZqRVZBMGdvMzNhaVBDa0FKNkpXaUlva2JFbW0weW9tenphZWp0aGFEZEs5eG9oOTJZNjkwQXpjQlZlK1hGSktpZTlvS0hMNloyV0QrdGY4UUp4L2Vnb2VzTFFxZ09hRDhZemY0em5SYmt4Z3krZDF5K3QrSHlWbW9kTk42enQvUkdXU0hTMGJvU2M1cW5JaEZFMUhYamh2T3crZ3V1RmN5ZXhHekdlZStqUEt3UllINGJ0czVaNUFJVmxGbW9LOTZ6am1wZTlmSXRUM1pQcHlIczB0d3d4N2pHYjdkajc0Y3JnWUxsQVNTR0IwbGdVdk1qR08zV0g2aWVPUVhMRCs5bW1oOGJqMXdYYzRXQUJXRy9yVWJlVWM2Zm9xNm0vNnJvWGhYT1BPUjJKeGJhWjFubnA3bldvUTNZdGxvb1F2bDFIemNKTUJMa2Q0cjlmMlNISVorM29yak1FY1JxOW9iVm5HdUJMMUJZaFhxU2llU2VtYWxoclBGcVdhWVdCbzZBSXpKYUxydFhnN2NBQ3NCZzZTVXhKakNKWURDMTJYbnk4THhqeGFQL3NmZWVVMDNjOVh0S2dCUVZRSW1BaitkalAycmRQd2tiUVFjZ3Z2NzBQckZZdUxUMnU3aGpPZUZITnZxbm1ydVNEWGZBbk0zczllZ2RwT2tiZHBYVUg0VmNjYk1nZXdXVkVTc0FxaTd0ZTZraWhBaW5XZG00R1F4TWRXRnpxSUwwYlYzK3VIYmsyMnZnbTlBYzlERFpjYlVoSEExbUxHeFE4WU9sby8vZG5ub3oxZm5BcjdrQUZvM3BIalpHV0RGWnY1dlAvYnZzbTBkYUU2T2k4L1ZQbHJPL242WS9taHN6YzQ3bjdtdUx4UG50Y3JwUFFaWmhjWXN2TXNnNUc2bTk3TDJZcVlKK0NUQ1F5Z09JNWFBUUhvTmdkaHJYOWVGamxFQ1NQcFVzbWlZREZOVFlWS1hyRkhaU3hoS3R5ZmI3cFdCYTJCS1lkVUtrNUthZUhPcGFlRG9UVEk0a2ovNE0vSGtGeTVSbE9BTFJZU2R0MjNmNmdaL3RiWnIzUGt6RmpKZ0JFN012bWJoNDJYelk3SDFCYzJQckZCMmZNRlQ3YWEvR2VsZFRHOW5zZ3VPeERIUmg2eDQwc3BaTTJjUVNDU3FacXVoZXdDa2daRlNsWTEyVEp6NFhQVnNiRTdGV2UzaWVESG9FREFqblI5NXFSdTdoNzRPaTZDdkR1b21IdUxwdkptVEhiZHBlYlR6K1orMTV0RXJDejFjVTBEWjVpdHJsVDUwaTZUdnFlOTZyYXRQbXJWZ2lXa0dxZE5COWJqcHN3aFB4UHlwV0R4dllkTENOR3dXcGtBS0RvQmprTDMwdXlBSDRmY3lHYUFyZ1FtVVIxaytaZUd3aFFMZEVKNHFZN1VrcXN6RDNvdFdoVWlMT0RnRE82YVQyajZyTFZ0dVZyb3l5OVgzSjl2dlpXMFhORUFjcEFaeHFMcnYrZ1JtVElaazkyM2grTjkzSHZoNWFMd1VTczhHQ3FZclNZVFpRZ3c1OENlU2taOU14M2RKY3RaaUIwb3pid2FJSjUyWmdWQ0xwamtRV0VXMW9vZ2FZQ1hSc1hEU3d2UFEwOURURm1lcm9DSktBRXF6cWd4NTBTdERYczVEandKQ3FUTElwaEVtWW1mR2ltV1hZYzZSUHBpTTNlT0diK3RxeDlVaFMycHdpWW1uVDgxTWh2ZGhkRS8rNkh2Q0UzOTRMbFBzcXFDdDFZaHR6dVYrVUpKLzVVZC9JQmthRWplbG1wdVdZTlFZekhKb1VNMWhIU0RDU3ROWldOTXNoeGF3dktvdURRdGdoTFZoYlZpc0N1WVpDbWhoS0hxU3ErejFsaWVvNEt6RlNRdG50TWloSzBFSGdJRXVIWDJwRzMwWmswRllDU1p3S2NURHBYQXBmR1lVR3QyZTIwM2E3VS8vZER6NVVEY1M2Q0w0d21WUXViZWFLMk1aNmdWT1lOTDBnN0gxdDdHWkEvdmg5OUlKR0N5V3RBQ1ExRjZlZ3NJVWRLeGlxNFJWdTFWVS9acTczQ1hNKzZleUczY3V2WXFjT2ZTMGhjUGFPYUw1cklXNFhNUHRjNzZ5Wk9DbTJzNDN1ckU3U1U4YUpJWFA0Rk5JQWw5bmtnRW05UjErLzIzeDdPZGFIM3U3VGorM21Vb1BONHRWY0dzeXh2bm12aDEwYjNHTk44ckFIZlRqY0FIb1FHYzA1cVp0V0F0V0dnSzFZOVlHQzJyZUxjcGhuZW9OcXJielZlRnBLTkEybTRWTklrNVlQR05oZGw1NzBxVlZ4WE5IdjFyakdqOTZwd3pjb0ZVcEJaZWg2dk10R1Z3QzUra1NHTGpqUmd3TjV3LytoL0xKdjdyaUhCUlhQSUFXdFJydm9idWIyVGN3dTBuOEhwTmhTRldkdmlwRjFTWnlzemJtMEdOVjA0d09iQmJXTkoyQ25vUk9XRHh0Y1FwYUxqQk1MaWtYNW9MbkFkUnIrK3FqTDVYaEd5S2hwaWExS3BNVlBqVko0V3NtQWxOcDdNVCttOE9weitTZitnV2JmZjdpeGRaV05rbHZhbGJHeGRnYnowczFHQ0gzd0kzRGJZT01VbXBnQWxhaCtBWFFwclZnTTJiVHBsUFFhZE1aYUh1SjRwNUw0UWE5a21BQ0RqYXVHUnk5UXhvSGlxb2lqQ1FtaVVwaUxyVTVwWWNDbjdwZHQwYmY2anowWDhLVEh3QndGVmg2cm1BT3RDaVMwUE52WE9UVExvVWJFbk05cGxLcGpRMWVOelIwRTJvN0MvRWxxRXlpUzFXU0tON29MY25NWlFhamI3anRCNjNHNHRDSDhpKzkxNHJaWGgwZ3cxVk4vcEt5SEc1d3RkY0ZNZFJjQlNPWi95ZGJ6aFRXTldGYlZZd0hHTXZHdHc5YzIyaGNFOU94UWx4aE1BTmRCcGRRRXJnYUpkRXFpOVNsYnV5QU5RYUtFLzh6Ly9KLzA2bWpMd1RHYzhrNUVMZDhVQUo3Y21wKzNlcHhQN2lydG5POHZqZXQ3eWhjbzFWMVFaUmFkTFZDMGloSmRFbVVWSjFYU2EwMndvRXhTN1djZURCLzdMNTQ1aW1nbCsyMUVmbm42eXZ6ZXBWd29LMmo0dGxDWGxVbHh2Y2ltZzFBQXU1S0J2ZW4yM1prMjdMYW1McEdXOXdzSkZpa3J6dG1RYnhLQnBjYXhaeUhyNk0ySWdQamtiT2Q1ejlRUFBNQm5UbmU1VHBRYU55b2Vic2lwSisvb3BuS1hFdVhKU0RMK1lWeDU5ZWx6TUR0a3U1eWpZUHB5SzdhcVBjRHBhUXR1aVpaSUJyU3hHVlJraUFwWFVaNmlHZFNrM1RFc29Fb0laOTlxamowcWZMNEZ4RHlIblRzQlNLemxnTVFWNkZKWEFwWnRnNW9KZ0RCYzVYSUY3K0V6WmtEUmlCalRIWkxzdC9YOWt0dG04dWMxQXFmNXM3bjRwcEVCeUZDRXFsd0l4QXZMaFhKSkJudzZYRDBXV0dkZHZ2WjlyR3Y1Qk5mMXRiODZnVjZlYUhEbFZxcVhaRWk3RkxMdXhwNUhaTjlTSGJUcGNBTXJBTXJ6Q0xNa3pRMklMdnBoc1FOZ21QMGcvUTFseGdsT3Rla3pFQm14WlZTOWJRVEp6NlZST25oa3BwcndOWGhHK2JydVdFMlB6Tjk5cXV6clVPZG1XYzFuNTlUakF0U2RyYmM3Tm1td0hjTEtTdHJwUUhLQWZwYmtkd3E2VzJTWGdlL2d5NmhWRHBPaExVcEJhMUp0TUFPMFNhRHVBNWRSM3gwaWJxa2xMVHRrdHhsTWFrMTRjL0VPR1UyRVl2VHhabkp6cWxtWjZJb3pzNGJKWHRsRm0wclQwdmZEclJPYXBENzRIYlRINUJrcjhrb2s1M2lCeUVpTGhVbjRrdXlwTXlTTGJpV3lKUnd3bXpDNG9TV1p6U2ZpcDNKb3RrTXJmT2FiWkJpd0JVWDdyNDUyT1ZWOEp6TFdSY0paOGpJQk9MWXJaMFJ6TFRiWVY2WHVHWlY1TXRXVmVmOGhVMjgwbmZBQmFhZEJhWkZXN25lRk9jS1NQY0tVdmNSODBJVllVc2hiOFYrWVgzcTAxVzdIZm5DZU16K00vU3BUMzNxVTUrVjlxbFBmZXBUbi9yQ29rLzlxZTlUbi9yVXB6NTc3bE4vMWZ2RDY4Tmh5NjlRSHpmOWxlaFRuL3JVMzhSOTZsT2YrbnU0VDMzdzlTZTZ2Mlo5dWxLUnpjMUZkbjhETEpqM2ZpUm8vM0g2MUYvYVB2V3BEL3hMT2dQOVNldFRmNlAyMTZCUFczQk8yQi9NRmo3YnYrQm1sWDAyc0pYbWdmM1ZmYUZ4aXhjb2UyQ2ZLL1NwdjMvNjFLYys5YWxQZmVwVG4vclVwNzV5dXZsVDBaK0xQdldwejlYNjlFS0ZBdnZvN0ZPZit0U25QdldwVDMzcTAwYlIvdzlpeHJuZDRhZGdMZ0FBQUFCSlJVNUVya0pnZ2c9PSIsICJzaXplcyI6ICIxOTJ4MTkyIiwgInR5cGUiOiAiaW1hZ2UvcG5nIn1dfQ==">
 <link rel="icon" href="data:image/png;base64,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" type="image/png">
@@ -733,6 +796,26 @@ table.tt { width: 100%; border-collapse: separate; border-spacing: 0; font-size:
     </div>
 
     <section class="card">
+      <div class="card-head"><h2>Focus timer</h2><span class="meta" id="focusToday">0 blocks done today</span></div>
+      <div class="meta">25 minutes of focus, then a 5-minute break. Short and steady beats long and tired.</div>
+      <div id="focusTime" class="focus-time" aria-live="polite">25:00</div>
+      <div id="focusLabel" class="focus-label">Focus time. Keep your phone out of reach.</div>
+      <select id="focusTask" onchange="paintFocus()" aria-label="Task you are working on"><option value="">Any task</option></select>
+      <div id="focusWorking" class="meta" style="margin-top:8px">Choose a task above, or just start.</div>
+      <div class="actions" style="margin-top:14px">
+        <button id="focusBtn" onclick="focusToggle()">Start</button>
+        <button class="secondary" onclick="focusReset()">Reset</button>
+      </div>
+    </section>
+
+    <section class="card">
+      <div class="card-head"><h2>My 3 priorities today</h2></div>
+      <div class="meta">Choose the three tasks that matter most today. Start with the first one.</div>
+      <div id="topList" class="pick-list" style="margin-top:12px"></div>
+    </section>
+
+    
+<section class="card">
       <div class="card-head"><h2>Today's schedule</h2></div>
       <div id="stats" class="summary"></div>
       <div id="message"></div>
@@ -749,6 +832,14 @@ table.tt { width: 100%; border-collapse: separate; border-spacing: 0; font-size:
     </section>
 
     <section class="card">
+      <div class="card-head"><h2>Daily review</h2></div>
+      <div id="reviewSummary"></div>
+      <textarea id="reviewNote" rows="2" placeholder="What went well? What was hard? (optional)" style="margin-top:12px"></textarea>
+      <div class="actions" style="margin-top:12px"><button onclick="saveReview()">Save today's review</button></div>
+    </section>
+
+    
+<section class="card">
       <div class="card-head"><h2>Reminder preview</h2></div>
       <div id="reminders" class="empty">Generate a schedule to see personalized reminders.</div>
     </section>
@@ -804,6 +895,54 @@ table.tt { width: 100%; border-collapse: separate; border-spacing: 0; font-size:
     </section>
 
     <section class="card">
+      <div class="card-head"><h2>Visual timetable</h2></div>
+      <div class="meta">Tap a subject, then tap a box to place it. Or drag a subject into a box. Tap a placed subject to move it. Use the eraser to clear a box.</div>
+      <div id="vtPalette" class="vt-palette" style="margin-top:12px"></div>
+      <div id="visualArea"></div>
+    </section>
+
+    <section class="card">
+      <div class="card-head"><h2>Subject tiles</h2></div>
+      <div class="meta">Make one tile per subject. Reuse it in the timetable and in custom tables.</div>
+      <div class="form" style="margin-top:12px">
+        <input id="tileName" placeholder="e.g. Physics" maxlength="30" aria-label="Subject name">
+        <div id="tileSwatches" class="swatches"></div>
+        <button onclick="addTile()">Add tile</button>
+      </div>
+      <div id="tileList" class="task-list"></div>
+    </section>
+
+    <section class="card">
+      <div class="card-head"><h2>Custom tables</h2></div>
+      <div class="meta">Choose the size by tapping or dragging across the grid, or use the + and − buttons.</div>
+      <div class="tb-pick">
+        <div id="sizeGrid" class="size-grid" aria-label="Table size"></div>
+        <div class="tb-counts">
+          <div class="row-ctl"><span>Rows</span><button class="secondary" onclick="tbPickBump('rows',-1)" aria-label="Fewer rows">−</button><b id="pickRows">3</b><button class="secondary" onclick="tbPickBump('rows',1)" aria-label="More rows">+</button></div>
+          <div class="row-ctl"><span>Columns</span><button class="secondary" onclick="tbPickBump('cols',-1)" aria-label="Fewer columns">−</button><b id="pickCols">4</b><button class="secondary" onclick="tbPickBump('cols',1)" aria-label="More columns">+</button></div>
+          <div id="sizeLabel" class="meta">3 × 4</div>
+          <button onclick="tbCreateFromPick()">Create table</button>
+        </div>
+      </div>
+      <div id="tableList" class="task-list"></div>
+    </section>
+
+    <div id="tableEditor"></div>
+
+    
+
+
+    <section class="card">
+      <div class="card-head"><h2>Break a long task down</h2></div>
+      <div class="meta">Big tasks are hard to start. Split one into 25-minute parts.</div>
+      <div class="form" style="margin-top:14px">
+        <select id="splitPick" aria-label="Long task to split"><option value="">Choose a long task</option></select>
+        <button class="secondary" onclick="splitSelected()">Split into 25-minute parts</button>
+      </div>
+    </section>
+
+    
+<section class="card">
       <div class="card-head"><h2>Projects</h2></div>
       <div class="meta">Group the subtasks of an assignment under one project. DayFlow shows its progress and warns about subtasks due after the final deadline.</div>
       <div class="form" style="margin-top:14px">
@@ -856,6 +995,12 @@ table.tt { width: 100%; border-collapse: separate; border-spacing: 0; font-size:
   <!-- TRACK -->
   <main class="view" id="view-track">
     <section class="card">
+      <div class="card-head"><h2>This week's goal</h2></div>
+      <div id="weekGoal"><div class="meta">Choose your priorities on the Today tab.</div></div>
+    </section>
+
+    
+<section class="card">
       <div class="card-head"><h2>Tracker</h2></div>
       <div id="tracker"><small>Generate a schedule to start tracking.</small></div>
     </section>
@@ -885,6 +1030,7 @@ table.tt { width: 100%; border-collapse: separate; border-spacing: 0; font-size:
           </select>
         </div>
       </div>
+      <div class="row" style="margin-top:12px"><div><label>Plan tomorrow at (evening)</label><input id="planTime" type="time" onchange="savePlanTime(this.value)"></div><div></div></div>
       <div id="notificationStatus" class="meta" style="margin-top:14px">Notifications are not enabled yet.</div>
     </section>
 
@@ -908,7 +1054,8 @@ table.tt { width: 100%; border-collapse: separate; border-spacing: 0; font-size:
       </div>
     </section>
 
-    <div class="footer">DayFlow • Your day, your rules. Data is saved locally in your browser.</div>
+    <div class="footer">DayFlow • Your day, your rules.</div>
+    <div class="signature">A_S_A_F</div>
   </main>
 
   <nav class="tabbar" aria-label="Main">
@@ -1418,6 +1565,10 @@ add("Collection in 1 hour", `Collect ${t.name} soon.`, new Date(col.getTime() - 
   }
 
   // Clear last time's reminders (ids 1000-1399), then schedule the new ones.
+  const planAt = localStorage.getItem("dayflow_planTime");
+  if (planAt) {
+    for (let k = 0; k < 7; k++) add("Plan tomorrow", "Choose your three most important tasks for tomorrow.", at(minutes(planAt), k));
+  }
   const old = Array.from({ length: 400 }, (_, i) => ({ id: 1000 + i }));
   await N.cancel({ notifications: old }).catch(() => {});
   if (!list.length) return;
@@ -1771,6 +1922,727 @@ function renderUpcoming() {
   }).join("") : '<div class="empty">No upcoming deadlines.</div>';
 }
 
+// ===== Study method (PDLC): focus timer, top priorities, split tasks, daily review, weekly goal =====
+const FOCUS_MIN = 25;
+const BREAK_MIN = 5;
+let focusState = { mode: "focus", left: FOCUS_MIN * 60, running: false, timer: null };
+
+function readJSON(key, fallback) {
+  try {
+    const v = JSON.parse(localStorage.getItem(key));
+    return v === null || v === undefined ? fallback : v;
+  } catch (e) { return fallback; }
+}
+function writeJSON(key, value) { localStorage.setItem(key, JSON.stringify(value)); }
+
+// ----- Priorities for today (at most three) -----
+function topIds() { return (readJSON("dayflow_top", {})[dateKey()]) || []; }
+
+function toggleTop(id) {
+  const all = readJSON("dayflow_top", {});
+  const k = dateKey();
+  let ids = all[k] || [];
+  if (ids.indexOf(id) >= 0) ids = ids.filter(x => x !== id);
+  else if (ids.length >= 3) return alert("Choose up to three priorities. Remove one first.");
+  else ids = ids.concat([id]);
+  all[k] = ids;
+  writeJSON("dayflow_top", all);
+  renderFocusArea();
+}
+
+function renderTop() {
+  const el = document.getElementById("topList");
+  if (!el) return;
+  const ids = topIds();
+  const pending = state.tasks.filter(t => !t.done);
+  if (!pending.length) {
+    el.innerHTML = '<div class="empty">Add tasks in Plan first. Then choose up to three here.</div>';
+    return;
+  }
+  el.innerHTML = pending.map(t => {
+    const on = ids.indexOf(t.id) >= 0;
+    return `<button class="pick${on ? " on" : ""}" onclick="toggleTop(${t.id})"><span class="tick">${on ? "✓" : "+"}</span><span>${esc(t.name)}</span></button>`;
+  }).join("") + `<div class="meta">${ids.length} of 3 chosen</div>`;
+}
+
+// ----- Focus timer: 25 minutes of focus, then a 5-minute break -----
+function clock(s) { return String(Math.floor(s / 60)).padStart(2, "0") + ":" + String(s % 60).padStart(2, "0"); }
+
+function focusTick() {
+  focusState.left -= 1;
+  if (focusState.left <= 0) { focusDone(); return; }
+  paintFocus();
+}
+
+function focusDone() {
+  clearInterval(focusState.timer);
+  focusState.running = false;
+  if (focusState.mode === "focus") {
+    const log = readJSON("dayflow_focus", {});
+    const k = dateKey();
+    log[k] = (log[k] || 0) + 1;
+    writeJSON("dayflow_focus", log);
+    notifyStudy("Focus block done. Take a 5-minute break.");
+    focusState.mode = "break";
+    focusState.left = BREAK_MIN * 60;
+  } else {
+    notifyStudy("Break is over. Ready for 25 more minutes?");
+    focusState.mode = "focus";
+    focusState.left = FOCUS_MIN * 60;
+  }
+  paintFocus();
+  renderWeek();
+}
+
+function notifyStudy(text) {
+  const N = nativeNotifier();
+  if (N) {
+    N.schedule({ notifications: [{ id: 998, title: "DayFlow", body: text, schedule: { at: new Date(Date.now() + 500) } }] }).catch(() => {});
+    return;
+  }
+  if ("Notification" in window && Notification.permission === "granted") sendDayFlowNotification("DayFlow", text);
+}
+
+function focusToggle() {
+  if (focusState.running) {
+    clearInterval(focusState.timer);
+    focusState.running = false;
+  } else {
+    focusState.running = true;
+    focusState.timer = setInterval(focusTick, 1000);
+  }
+  paintFocus();
+}
+
+function focusReset() {
+  clearInterval(focusState.timer);
+  focusState = { mode: "focus", left: FOCUS_MIN * 60, running: false, timer: null };
+  paintFocus();
+}
+
+function paintFocus() {
+  const t = document.getElementById("focusTime");
+  if (!t) return;
+  t.textContent = clock(focusState.left);
+  document.getElementById("focusLabel").textContent = focusState.mode === "focus"
+    ? "Focus time. Keep your phone out of reach."
+    : "Break time. Stand up, stretch, drink some water.";
+  const full = focusState.mode === "focus" ? FOCUS_MIN * 60 : BREAK_MIN * 60;
+  document.getElementById("focusBtn").textContent = focusState.running ? "Pause" : (focusState.left === full ? "Start" : "Continue");
+  const n = (readJSON("dayflow_focus", {})[dateKey()]) || 0;
+  document.getElementById("focusToday").textContent = n + (n === 1 ? " block" : " blocks") + " done today";
+  const sel = document.getElementById("focusTask");
+  const picked = sel && sel.value ? state.tasks.find(x => String(x.id) === sel.value) : null;
+  document.getElementById("focusWorking").textContent = picked ? "Working on: " + picked.name : "Choose a task above, or just start.";
+}
+
+// ----- Break a long task into focus-sized parts -----
+function splitTask(id) {
+  const t = state.tasks.find(x => x.id === id);
+  if (!t) return;
+  const parts = Math.ceil(t.duration / FOCUS_MIN);
+  if (parts < 2) return alert("This task is already one focus block or shorter.");
+  if (!confirm(`Split "${t.name}" into ${parts} parts of up to ${FOCUS_MIN} minutes?`)) return;
+  const pieces = [];
+  let left = t.duration;
+  for (let i = 1; i <= parts; i++) {
+    const d = Math.min(FOCUS_MIN, left);
+    left -= d;
+    pieces.push(Object.assign({}, t, { id: Date.now() + i, name: `${t.name} (part ${i} of ${parts})`, duration: d }));
+  }
+  state.tasks.splice(state.tasks.indexOf(t), 1, ...pieces);
+  save();
+  generateSchedule();
+  renderLists();
+}
+
+function splitSelected() {
+  const v = document.getElementById("splitPick").value;
+  if (v) splitTask(Number(v));
+}
+
+// ----- Daily review -----
+function saveReview() {
+  const note = document.getElementById("reviewNote").value.trim();
+  const all = readJSON("dayflow_review", {});
+  all[dateKey()] = { note: note };
+  writeJSON("dayflow_review", all);
+  renderReview();
+}
+
+function renderReview() {
+  const el = document.getElementById("reviewSummary");
+  if (!el) return;
+  const k = dateKey();
+  const top = topIds().map(id => state.tasks.find(t => t.id === id)).filter(Boolean);
+  const doneTop = top.filter(t => t.done).length;
+  const blocks = (readJSON("dayflow_focus", {})[k]) || 0;
+  el.innerHTML = `<div class="meta">${top.length ? doneTop + " of " + top.length + " priorities done" : "No priorities chosen today"} • ${blocks} focus block${blocks === 1 ? "" : "s"}</div>`;
+  const box = document.getElementById("reviewNote");
+  if (box && document.activeElement !== box) box.value = ((readJSON("dayflow_review", {})[k]) || {}).note || "";
+}
+
+// ----- Weekly goal: finish 4 of 5 priorities (target 80%) -----
+function renderWeek() {
+  const el = document.getElementById("weekGoal");
+  if (!el) return;
+  const tops = readJSON("dayflow_top", {});
+  const focus = readJSON("dayflow_focus", {});
+  let picks = 0, doneP = 0, blocks = 0;
+  for (let i = 6; i >= 0; i--) {
+    const d = new Date();
+    d.setDate(d.getDate() - i);
+    const k = dateKey(d);
+    (tops[k] || []).forEach(id => {
+      const t = state.tasks.find(x => x.id === id);
+      if (!t) return;
+      picks++;
+      if (t.done) doneP++;
+    });
+    blocks += focus[k] || 0;
+  }
+  const pct = picks ? Math.round(doneP / picks * 100) : 0;
+  const msg = !picks ? "Choose your priorities on the Today tab. Aim to finish 4 of 5 each week."
+    : (pct >= 80 ? "On target. Keep it up!" : "Keep going. Aim to finish 4 of 5 priorities each week.");
+  el.innerHTML = `<div class="tracker-head">
+      <div><b>${doneP} of ${picks}</b><small>priorities done</small></div>
+      <div><b>${pct}%</b><small>target 80%</small></div>
+      <div><b>${blocks}</b><small>focus blocks</small></div>
+    </div>
+    <div class="meta" style="margin-top:12px">${msg}</div>`;
+}
+
+// ----- Plan tomorrow reminder (evening) -----
+function savePlanTime(v) {
+  if (v) localStorage.setItem("dayflow_planTime", v); else localStorage.removeItem("dayflow_planTime");
+  scheduleNativeReminders();
+}
+
+// Refreshes every study panel that depends on the task list.
+function renderFocusArea() {
+  renderTop();
+  const pending = state.tasks.filter(t => !t.done);
+  const ids = topIds();
+  const sel = document.getElementById("focusTask");
+  if (sel) {
+    const cur = sel.value;
+    sel.innerHTML = '<option value="">Any task</option>' + pending.map(t =>
+      `<option value="${t.id}">${ids.indexOf(t.id) >= 0 ? "★ " : ""}${esc(t.name)}</option>`).join("");
+    sel.value = cur;
+  }
+  const split = document.getElementById("splitPick");
+  if (split) {
+    const cur = split.value;
+    split.innerHTML = '<option value="">Choose a long task</option>' + state.tasks.filter(t => t.duration > FOCUS_MIN).map(t =>
+      `<option value="${t.id}">${esc(t.name)} (${t.duration} min)</option>`).join("");
+    split.value = cur;
+  }
+  const pt = document.getElementById("planTime");
+  if (pt && !pt.getAttribute("data-set")) { pt.value = localStorage.getItem("dayflow_planTime") || ""; pt.setAttribute("data-set", "1"); }
+  renderReview();
+  renderWeek();
+  paintFocus();
+}
+
+// ===== Subject tiles and the shared grid engine =====
+const TILE_COLORS = ["#7c6cf0", "#3d8bfd", "#21a67a", "#e0953a", "#e0607a", "#9b6fc9", "#4a9ea8", "#7f8c4a"];
+let tileNewColor = TILE_COLORS[0];
+
+function loadLib() { return readJSON("dayflow_library", []); }
+function saveLib(list) { writeJSON("dayflow_library", list); }
+function tileColor(name) {
+  const t = loadLib().find(x => x.name === name);
+  return t ? t.color : "#6b6b86";
+}
+
+function renderLibrary() {
+  const sw = document.getElementById("tileSwatches");
+  if (sw) sw.innerHTML = TILE_COLORS.map(c =>
+    `<button type="button" class="swatch${c === tileNewColor ? " on" : ""}" style="background:${c}" aria-label="Colour ${c}" onclick="pickTileColor('${c}')"></button>`).join("");
+  const list = document.getElementById("tileList");
+  if (!list) return;
+  const tiles = loadLib();
+  list.innerHTML = tiles.length ? tiles.map(t => `
+    <div class="task">
+      <div class="tile-row"><span class="dot" style="background:${t.color}"></span><strong>${esc(t.name)}</strong></div>
+      <div class="actions tile-actions">
+        <button class="secondary" onclick="renameTile(${t.id})">Rename</button>
+        <button class="danger" onclick="deleteTile(${t.id})">Delete</button>
+      </div>
+    </div>`).join("") : '<div class="empty">No subject tiles yet. Add your first subject above.</div>';
+}
+
+function pickTileColor(c) { tileNewColor = c; renderLibrary(); }
+
+function addTile() {
+  const name = document.getElementById("tileName").value.trim();
+  if (!name) return alert("Enter a name for the tile.");
+  const lib = loadLib();
+  if (lib.some(t => t.name.toLowerCase() === name.toLowerCase())) return alert("You already have a tile called " + name + ".");
+  lib.push({ id: Date.now(), name: name, color: tileNewColor });
+  saveLib(lib);
+  document.getElementById("tileName").value = "";
+  renderLibrary(); renderVisual(); renderTables();
+}
+
+function renameTile(id) {
+  const lib = loadLib();
+  const t = lib.find(x => x.id === id);
+  if (!t) return;
+  const name = (prompt("New name for this tile", t.name) || "").trim();
+  if (!name || name === t.name) return;
+  if (lib.some(x => x.id !== id && x.name.toLowerCase() === name.toLowerCase())) return alert("That name is already used.");
+  renameEverywhere(t.name, name);
+  t.name = name;
+  saveLib(lib);
+  renderLibrary(); renderVisual(); renderTimetable(); renderTables();
+}
+
+function deleteTile(id) {
+  const lib = loadLib();
+  const t = lib.find(x => x.id === id);
+  if (!t || !confirm("Delete the tile \"" + t.name + "\"? Boxes that already use it keep their text.")) return;
+  saveLib(lib.filter(x => x.id !== id));
+  renderLibrary(); renderVisual();
+}
+
+// Renaming a tile also renames the text it already filled in, in the timetable and custom tables.
+function renameEverywhere(oldName, newName) {
+  if (state.tt && state.tt.cells) {
+    Object.keys(state.tt.cells).forEach(k => { if (state.tt.cells[k] === oldName) state.tt.cells[k] = newName; });
+    save(); saveTT();
+  }
+  const tables = loadTables();
+  tables.forEach(tb => Object.keys(tb.cells).forEach(k => { if (tb.cells[k].v === oldName) tb.cells[k].v = newName; }));
+  saveTables(tables);
+}
+
+// ----- Shared grid engine: works on any table object { rows, cols, cells: {"r,c": {v, bg, al}} } -----
+function gKey(r, c) { return r + "," + c; }
+function gGet(t, r, c) { const x = t.cells[gKey(r, c)]; return x ? Object.assign({}, x) : { v: "", bg: "", al: "" }; }
+function gSet(t, r, c, patch) {
+  const cur = t.cells[gKey(r, c)] || { v: "", bg: "", al: "" };
+  const next = Object.assign({}, cur, patch);
+  if (!next.v && !next.bg && !next.al) delete t.cells[gKey(r, c)];
+  else t.cells[gKey(r, c)] = next;
+}
+function gClear(t, r, c) { delete t.cells[gKey(r, c)]; }
+function gRowHasText(t, r) { return Object.keys(t.cells).some(k => k.split(",")[0] === String(r) && t.cells[k].v); }
+function gColHasText(t, c) { return Object.keys(t.cells).some(k => k.split(",")[1] === String(c) && t.cells[k].v); }
+function gShift(t, fn) {
+  const out = {};
+  Object.keys(t.cells).forEach(k => {
+    const p = k.split(",").map(Number);
+    const n = fn(p[0], p[1]);
+    if (n) out[gKey(n[0], n[1])] = t.cells[k];
+  });
+  t.cells = out;
+}
+function gInsertRow(t, at) { gShift(t, (r, c) => [r >= at ? r + 1 : r, c]); t.rows++; }
+function gDeleteRow(t, at) { gShift(t, (r, c) => r === at ? null : [r > at ? r - 1 : r, c]); t.rows--; }
+function gInsertCol(t, at) { gShift(t, (r, c) => [r, c >= at ? c + 1 : c]); t.cols++; }
+function gDeleteCol(t, at) { gShift(t, (r, c) => c === at ? null : [r, c > at ? c - 1 : c]); t.cols--; }
+function gDuplicateRow(t, r) {
+  gInsertRow(t, r + 1);
+  for (let c = 0; c < t.cols; c++) {
+    const cell = t.cells[gKey(r, c)];
+    if (cell) t.cells[gKey(r + 1, c)] = Object.assign({}, cell);
+  }
+}
+// Resizes to new dimensions. Returns false (and changes nothing) if text would be lost.
+function gResize(t, rows, cols) {
+  if (rows < t.rows && Object.keys(t.cells).some(k => Number(k.split(",")[0]) >= rows && t.cells[k].v)) return false;
+  if (cols < t.cols && Object.keys(t.cells).some(k => Number(k.split(",")[1]) >= cols && t.cells[k].v)) return false;
+  while (t.rows > rows) gDeleteRow(t, t.rows - 1);
+  while (t.rows < rows) gInsertRow(t, t.rows);
+  while (t.cols > cols) gDeleteCol(t, t.cols - 1);
+  while (t.cols < cols) gInsertCol(t, t.cols);
+  return true;
+}
+
+// ----- Visual timetable: tap or drag subjects into the timetable -----
+let vtSel = null; // { type: "tile", name } | { type: "eraser" } | { type: "cell", rowId, c, name }
+
+function vtKey(rowId, c) { return rowId + "|" + c; }
+
+function vtAfter() {
+  saveTT();
+  ttRefresh();
+  renderTimetable();
+  renderVisual();
+}
+
+function vtPlace(rowId, c, src) {
+  const k = vtKey(rowId, c);
+  if (src.type === "tile") state.tt.cells[k] = src.name;
+  else if (src.type === "eraser") delete state.tt.cells[k];
+  else if (src.type === "cell") {
+    if (src.rowId === rowId && src.c === c) return;
+    delete state.tt.cells[vtKey(src.rowId, src.c)];
+    state.tt.cells[k] = src.name;
+  }
+  vtAfter();
+}
+
+function vtTapCell(rowId, c) {
+  const name = state.tt.cells[vtKey(rowId, c)] || "";
+  if (vtSel && vtSel.type === "cell") {
+    const from = vtSel;
+    vtSel = null;
+    if (from.rowId === rowId && from.c === c) return renderVisual();
+    return vtPlace(rowId, c, from);
+  }
+  if (vtSel) return vtPlace(rowId, c, vtSel);
+  if (name) { vtSel = { type: "cell", rowId: rowId, c: c, name: name }; renderVisual(); }
+}
+
+function vtDrop(src, rowId, c) {
+  if (!src) return;
+  if (src.type === "cell" && src.rowId === rowId && src.c === c) return;
+  vtPlace(rowId, c, src);
+}
+
+function vtGhost(src) {
+  const g = document.createElement("div");
+  g.className = "vt-ghost";
+  g.textContent = src.name || "Eraser";
+  g.style.background = src.type === "tile" || src.type === "cell" ? tileColor(src.name) : "#6b6b86";
+  document.body.appendChild(g);
+  return g;
+}
+
+// Works for touch and mouse. A short press is a tap; a longer move is a drag.
+function vtBind(el, src, onTap) {
+  el.addEventListener("pointerdown", down => {
+    const x0 = down.clientX, y0 = down.clientY;
+    let dragging = false, ghost = null;
+    const move = m => {
+      if (!dragging && Math.hypot(m.clientX - x0, m.clientY - y0) > 8 && src) {
+        dragging = true;
+        ghost = vtGhost(src);
+      }
+      if (dragging) {
+        m.preventDefault();
+        ghost.style.transform = "translate(" + (m.clientX - 30) + "px," + (m.clientY - 18) + "px)";
+      }
+    };
+    const end = () => {
+      window.removeEventListener("pointermove", move);
+      window.removeEventListener("pointerup", up);
+      window.removeEventListener("pointercancel", end);
+      if (ghost) ghost.remove();
+    };
+    const up = u => {
+      const wasDrag = dragging;
+      end();
+      if (wasDrag) {
+        const hit = document.elementFromPoint(u.clientX, u.clientY);
+        const cell = hit && hit.closest ? hit.closest("[data-vt-cell]") : null;
+        if (cell) {
+          const p = cell.getAttribute("data-vt-cell").split("|");
+          vtDrop(src, p[0], Number(p[1]));
+        }
+      } else if (onTap) onTap();
+    };
+    window.addEventListener("pointermove", move, { passive: false });
+    window.addEventListener("pointerup", up);
+    window.addEventListener("pointercancel", end);
+  });
+}
+
+function renderVisual() {
+  const el = document.getElementById("visualArea");
+  const pal = document.getElementById("vtPalette");
+  if (!el || !pal) return;
+  const lib = loadLib();
+  pal.innerHTML = lib.map(t => `<div class="vt-tile${vtSel && vtSel.type === "tile" && vtSel.name === t.name ? " sel" : ""}" data-tile="${t.id}" style="background:${t.color}">${esc(t.name)}</div>`).join("")
+    + `<div class="vt-tile vt-eraser${vtSel && vtSel.type === "eraser" ? " sel" : ""}" data-eraser="1">Eraser</div>`;
+  if (!lib.length) pal.insertAdjacentHTML("afterbegin", '<div class="meta" style="width:100%">Add subject tiles below first.</div>');
+  if (!state.tt) { el.innerHTML = '<div class="empty">Build your timetable first. Then place subjects here.</div>'; }
+  else {
+    let n = 0;
+    el.innerHTML = `<div class="vt-scroll"><div class="vt-grid" style="grid-template-columns: 62px repeat(${state.tt.days.length}, minmax(92px, 1fr))">
+      <div></div>${state.tt.days.map(d => `<div class="vt-day">${esc(d)}</div>`).join("")}
+      ${state.tt.rows.map(r => {
+        const label = r.type === "break" ? "Break" : "P" + (++n);
+        const cells = state.tt.days.map((d, c) => {
+          if (r.type === "break") return `<div class="vt-break">Break</div>`;
+          const name = state.tt.cells[vtKey(r.id, c)] || "";
+          const isSel = vtSel && vtSel.type === "cell" && vtSel.rowId === r.id && vtSel.c === c;
+          return `<div class="vt-cell${isSel ? " sel-cell" : ""}" data-vt-cell="${r.id}|${c}" style="${name ? "background:" + tileColor(name) : ""}">${name ? esc(name) : "+"}</div>`;
+        }).join("");
+        return `<div class="vt-label">${label}</div>${cells}`;
+      }).join("")}
+    </div></div>`;
+  }
+  pal.querySelectorAll("[data-tile]").forEach(node => {
+    const t = lib.find(x => String(x.id) === node.getAttribute("data-tile"));
+    if (!t) return;
+    const src = { type: "tile", name: t.name };
+    vtBind(node, src, () => {
+      vtSel = vtSel && vtSel.type === "tile" && vtSel.name === t.name ? null : src;
+      renderVisual();
+    });
+  });
+  const eraser = pal.querySelector("[data-eraser]");
+  if (eraser) vtBind(eraser, { type: "eraser" }, () => { vtSel = vtSel && vtSel.type === "eraser" ? null : { type: "eraser" }; renderVisual(); });
+  el.querySelectorAll("[data-vt-cell]").forEach(node => {
+    const parts = node.getAttribute("data-vt-cell").split("|");
+    const rowId = parts[0], c = Number(parts[1]);
+    const name = state.tt.cells[vtKey(rowId, c)] || "";
+    const src = name ? { type: "cell", rowId: rowId, c: c, name: name } : null;
+    vtBind(node, src, () => vtTapCell(rowId, c));
+  });
+}
+
+// ===== Custom tables (built on the shared grid engine) =====
+const TB_MAX_HISTORY = 50;
+let tbPick = { rows: 3, cols: 4 };
+let tbActive = null;   // the table being edited
+let tbHist = [];
+let tbFuture = [];
+let tbSel = { r: 0, c: 0 };
+let tbClip = null;
+let tbSizeDown = false;
+
+function loadTables() { return readJSON("dayflow_tables", []); }
+function saveTables(list) { writeJSON("dayflow_tables", list); }
+
+// ----- Size picker: tap or drag across the grid, or use + and - -----
+function renderSizePicker() {
+  const grid = document.getElementById("sizeGrid");
+  if (!grid) return;
+  if (!grid.children.length) {
+    let html = "";
+    for (let r = 1; r <= 8; r++) for (let c = 1; c <= 8; c++) html += `<div data-r="${r}" data-c="${c}"></div>`;
+    grid.innerHTML = html;
+  }
+  grid.querySelectorAll("[data-r]").forEach(node => {
+    const r = Number(node.getAttribute("data-r")), c = Number(node.getAttribute("data-c"));
+    node.classList.toggle("on", r <= tbPick.rows && c <= tbPick.cols);
+  });
+  document.getElementById("sizeLabel").textContent = tbPick.rows + " × " + tbPick.cols;
+  document.getElementById("pickRows").textContent = tbPick.rows;
+  document.getElementById("pickCols").textContent = tbPick.cols;
+}
+
+function tbPickBump(which, d) {
+  const max = 20;
+  const v = tbPick[which] + d;
+  if (v < 1 || v > max) return;
+  tbPick[which] = v;
+  renderSizePicker();
+}
+
+function tbPickAt(x, y) {
+  const hit = document.elementFromPoint(x, y);
+  const cell = hit && hit.closest ? hit.closest("#sizeGrid [data-r]") : null;
+  if (!cell) return;
+  tbPick = { rows: Number(cell.getAttribute("data-r")), cols: Number(cell.getAttribute("data-c")) };
+  renderSizePicker();
+}
+
+function tbCreateFromPick() {
+  const name = (prompt("Name this table", "My table") || "").trim();
+  if (!name) return;
+  const tables = loadTables();
+  const t = { id: Date.now(), name: name, rows: tbPick.rows, cols: tbPick.cols, headRow: true, headCol: false, title: "", cells: {} };
+  tables.push(t);
+  saveTables(tables);
+  renderTables();
+  tbOpen(t.id);
+}
+
+// ----- Saved table list -----
+function renderTables() {
+  renderSizePicker();
+  const list = document.getElementById("tableList");
+  if (!list) return;
+  const tables = loadTables();
+  list.innerHTML = tables.length ? tables.map(t => `
+    <div class="task">
+      <div><strong>${esc(t.name)}</strong><div class="meta">${t.rows} × ${t.cols}${t.title ? " • " + esc(t.title) : ""}</div></div>
+      <div class="actions tile-actions">
+        <button class="secondary" onclick="tbOpen(${t.id})">Open</button>
+        <button class="danger" onclick="tbDelete(${t.id})">Delete</button>
+      </div>
+    </div>`).join("") : '<div class="empty">No custom tables yet. Choose a size above and create one.</div>';
+}
+
+function tbDelete(id) {
+  const t = loadTables().find(x => x.id === id);
+  if (!t || !confirm("Delete the table \"" + t.name + "\"? This cannot be undone.")) return;
+  saveTables(loadTables().filter(x => x.id !== id));
+  if (tbActive && tbActive.id === id) { tbActive = null; document.getElementById("tableEditor").innerHTML = ""; }
+  renderTables();
+}
+
+// ----- Editing: every change goes through here so undo and redo work -----
+function tbOpen(id) {
+  const t = loadTables().find(x => x.id === id);
+  if (!t) return;
+  tbActive = JSON.parse(JSON.stringify(t));
+  tbHist = []; tbFuture = []; tbSel = { r: 0, c: 0 };
+  tbEditorRender();
+  document.getElementById("tableEditor").scrollIntoView({ behavior: "smooth", block: "start" });
+}
+
+function tbPersist() {
+  const tables = loadTables();
+  const i = tables.findIndex(x => x.id === tbActive.id);
+  if (i >= 0) tables[i] = JSON.parse(JSON.stringify(tbActive));
+  saveTables(tables);
+  renderTables();
+}
+
+function tbSnap() {
+  tbHist.push(JSON.stringify(tbActive));
+  if (tbHist.length > TB_MAX_HISTORY) tbHist.shift();
+  tbFuture = [];
+}
+
+function tbDo(fn) {
+  tbSnap();
+  fn(tbActive);
+  tbClampSel();
+  tbPersist();
+  tbEditorRender();
+}
+
+function tbClampSel() {
+  tbSel.r = Math.min(tbSel.r, tbActive.rows - 1);
+  tbSel.c = Math.min(tbSel.c, tbActive.cols - 1);
+}
+
+function tbUndo() {
+  if (!tbHist.length) return;
+  tbFuture.push(JSON.stringify(tbActive));
+  tbActive = JSON.parse(tbHist.pop());
+  tbClampSel(); tbPersist(); tbEditorRender();
+}
+
+function tbRedo() {
+  if (!tbFuture.length) return;
+  tbHist.push(JSON.stringify(tbActive));
+  tbActive = JSON.parse(tbFuture.pop());
+  tbClampSel(); tbPersist(); tbEditorRender();
+}
+
+// Typing: saved on change, without redrawing, so the keyboard stays open.
+function tbTyped(r, c, value) {
+  tbSnap();
+  gSet(tbActive, r, c, { v: value });
+  tbPersist();
+}
+
+function tbAddRow() { tbDo(t => { gInsertRow(t, tbSel.r + 1); tbSel.r++; }); }
+function tbAddCol() { tbDo(t => { gInsertCol(t, tbSel.c + 1); tbSel.c++; }); }
+function tbDupRow() { tbDo(t => { gDuplicateRow(t, tbSel.r); tbSel.r++; }); }
+
+function tbDelRow() {
+  if (tbActive.rows <= 1) return alert("A table needs at least one row.");
+  if (gRowHasText(tbActive, tbSel.r) && !confirm("This row has text. Delete it?")) return;
+  tbDo(t => gDeleteRow(t, tbSel.r));
+}
+
+function tbDelCol() {
+  if (tbActive.cols <= 1) return alert("A table needs at least one column.");
+  if (gColHasText(tbActive, tbSel.c) && !confirm("This column has text. Delete it?")) return;
+  tbDo(t => gDeleteCol(t, tbSel.c));
+}
+
+function tbClear() { tbDo(t => gClear(t, tbSel.r, tbSel.c)); }
+function tbCopy() { tbClip = gGet(tbActive, tbSel.r, tbSel.c); renderTables(); tbEditorRender(); }
+function tbPaste() {
+  if (!tbClip) return alert("Copy a cell first.");
+  tbDo(t => gSet(t, tbSel.r, tbSel.c, Object.assign({}, tbClip)));
+}
+function tbFormat(patch) { tbDo(t => gSet(t, tbSel.r, tbSel.c, patch)); }
+function tbSetFlag(key, on) { tbDo(t => { t[key] = on; }); }
+function tbSetTitle(v) { tbSnap(); tbActive.title = v.trim(); tbPersist(); }
+function tbSetName(v) { const n = v.trim(); if (n) { tbSnap(); tbActive.name = n; tbPersist(); } }
+function tbSelect(r, c) { tbSel = { r: r, c: c }; tbEditorRender(); }
+
+function tbInsertTile() {
+  const name = document.getElementById("tbTile").value;
+  if (!name) return;
+  tbDo(t => gSet(t, tbSel.r, tbSel.c, { v: name }));
+}
+
+function tbResize(rows, cols) {
+  if (!gResize(tbActive, rows, cols)) return alert("Some text would be lost. Clear those rows or columns first.");
+  tbSnap(); tbClampSel(); tbPersist(); tbEditorRender();
+}
+
+function tbEditorRender() {
+  const box = document.getElementById("tableEditor");
+  if (!box || !tbActive) return;
+  const t = tbActive;
+  const lib = loadLib();
+  const sel = gGet(t, tbSel.r, tbSel.c);
+  const tiles = lib.length ? `<select id="tbTile" aria-label="Subject tile"><option value="">Choose a tile</option>${lib.map(x => `<option value="${esc(x.name)}">${esc(x.name)}</option>`).join("")}</select>
+      <button class="secondary" onclick="tbInsertTile()">Put tile in cell</button>` : '<div class="meta">Add subject tiles to reuse them here.</div>';
+  const swatches = TILE_COLORS.map(c => `<button type="button" class="swatch" style="background:${c}" aria-label="Cell colour" onclick="tbFormat({bg:'${c}'})"></button>`).join("");
+  let rowsHtml = "";
+  for (let r = 0; r < t.rows; r++) {
+    let cells = "";
+    for (let c = 0; c < t.cols; c++) {
+      const cell = gGet(t, r, c);
+      const isHead = (t.headRow && r === 0) || (t.headCol && c === 0);
+      const cls = [isHead ? "head" : "", r === tbSel.r && c === tbSel.c ? "sel" : ""].join(" ").trim();
+      const style = `background:${cell.bg || "transparent"};text-align:${cell.al || "left"}`;
+      cells += `<td class="${cls}" style="${style}"><input class="ct-input" value="${esc(cell.v)}" aria-label="Row ${r + 1}, column ${c + 1}"
+        onfocus="tbSelect(${r},${c})" onchange="tbTyped(${r},${c},this.value)"></td>`;
+    }
+    rowsHtml += `<tr>${cells}</tr>`;
+  }
+  box.innerHTML = `
+    <div class="card tb-editor">
+      <div class="card-head"><h2>Edit table</h2><button class="secondary" onclick="tbClose()">Close</button></div>
+      <div class="form">
+        <input id="tbName" value="${esc(t.name)}" aria-label="Table name" onchange="tbSetName(this.value)">
+        <input id="tbTitle" value="${esc(t.title || "")}" placeholder="Optional title shown above the table" aria-label="Table title" onchange="tbSetTitle(this.value)">
+        <div class="row">
+          <label class="check"><input type="checkbox" ${t.headRow ? "checked" : ""} onchange="tbSetFlag('headRow',this.checked)"> Header row</label>
+          <label class="check"><input type="checkbox" ${t.headCol ? "checked" : ""} onchange="tbSetFlag('headCol',this.checked)"> Header column</label>
+        </div>
+      </div>
+      <div class="toolbar" role="toolbar" aria-label="Table actions">
+        <button class="secondary" onclick="tbUndo()" ${tbHist.length ? "" : "disabled"}>Undo</button>
+        <button class="secondary" onclick="tbRedo()" ${tbFuture.length ? "" : "disabled"}>Redo</button>
+        <button class="secondary" onclick="tbAddRow()">Add row</button>
+        <button class="secondary" onclick="tbAddCol()">Add column</button>
+        <button class="secondary" onclick="tbDupRow()">Duplicate row</button>
+        <button class="secondary" onclick="tbDelRow()">Delete row</button>
+        <button class="secondary" onclick="tbDelCol()">Delete column</button>
+        <button class="secondary" onclick="tbClear()">Clear cell</button>
+        <button class="secondary" onclick="tbCopy()">Copy cell</button>
+        <button class="secondary" onclick="tbPaste()">Paste cell</button>
+      </div>
+      <div class="toolbar">
+        <button class="secondary" onclick="tbFormat({al:'left'})">Align left</button>
+        <button class="secondary" onclick="tbFormat({al:'center'})">Centre</button>
+        <button class="secondary" onclick="tbFormat({al:'right'})">Align right</button>
+        <button class="secondary" onclick="tbFormat({bg:''})">No colour</button>
+      </div>
+      <div class="swatches" style="margin-bottom:10px">${swatches}</div>
+      <div class="form">${tiles}</div>
+      <div class="meta" style="margin:12px 0">Selected cell: row ${tbSel.r + 1}, column ${tbSel.c + 1}${sel.v ? " • " + esc(sel.v) : ""}</div>
+      <div class="ct-wrap"><table class="ct-table"><tbody>${rowsHtml}</tbody></table></div>
+      <div class="toolbar" style="margin-top:12px">
+        <button class="secondary" onclick="tbResize(${Math.max(1, t.rows - 1)},${t.cols})" ${t.rows <= 1 ? "disabled" : ""}>− row</button>
+        <button class="secondary" onclick="tbResize(${t.rows + 1},${t.cols})">+ row</button>
+        <button class="secondary" onclick="tbResize(${t.rows},${Math.max(1, t.cols - 1)})" ${t.cols <= 1 ? "disabled" : ""}>− column</button>
+        <button class="secondary" onclick="tbResize(${t.rows},${t.cols + 1})">+ column</button>
+      </div>
+    </div>`;
+}
+
+function tbClose() {
+  tbActive = null;
+  document.getElementById("tableEditor").innerHTML = "";
+}
+
 function markScheduledDone(id) {
   const t=state.tasks.find(x=>String(x.id)===String(id));
   if(t){setBlockStatus(state.schedule.find(x=>x.type==="task"&&String(x.id)===String(id)),"done");t.done=true;save();renderLists();generateSchedule();}
@@ -1778,7 +2650,7 @@ function markScheduledDone(id) {
 function clearAll() {
   if (!confirm("Reset everything in DayFlow? This clears your routine, commitments, tasks, tracker history, and all settings.")) return;
   ["dayflow_fixed", "dayflow_log", "dayflow_tasks", "dayflow_prefs",
-   "dayflow_appearance_v2", "dayflow_notifyMode", "dayflow_notifyStyle", "dayflow_guide_seen", "dayflow_tt", "dayflow_attendance", "dayflow_projects", "dayflow_timetable"]
+   "dayflow_appearance_v2", "dayflow_notifyMode", "dayflow_notifyStyle", "dayflow_guide_seen", "dayflow_tt", "dayflow_attendance", "dayflow_projects", "dayflow_timetable", "dayflow_library", "dayflow_tables"]
     .forEach(k => localStorage.removeItem(k));
   // Keep this flag set so the demo data is not added again after the reset.
   localStorage.setItem("dayflow_seeded", "1");
@@ -1966,9 +2838,13 @@ function showView(name) {
   const h = now.getHours();
   const hello = h < 12 ? 'Good morning.' : h < 17 ? 'Good afternoon.' : 'Good evening.';
   document.getElementById('greeting').textContent = hello + ' Here is your day.';
+renderFocusArea();
+renderLibrary();
+renderVisual();
+renderTables();
 })();
 
-const GUIDE = [{"icon": "<rect x=\"3\" y=\"4\" width=\"18\" height=\"17\" rx=\"3\"/><path d=\"M3 9h18M8 2v4M16 2v4\"/>", "title": "Welcome to DayFlow", "text": "DayFlow builds your day around you. Tell it when you are free, what you must do, and it arranges the rest."}, {"icon": "<path d=\"M9 6h12M9 12h12M9 18h12\"/><path d=\"M3 6l1.5 1.5L7.5 4.5M3 12l1.5 1.5 3-3M3 18l1.5 1.5 3-3\"/>", "title": "Set your routine", "text": "Open the Plan tab and enter your wake-up time and bedtime. DayFlow only plans the hours between them."}, {"icon": "<path d=\"M9 6h12M9 12h12M9 18h12\"/><path d=\"M3 6l1.5 1.5L7.5 4.5M3 12l1.5 1.5 3-3M3 18l1.5 1.5 3-3\"/>", "title": "Add fixed commitments", "text": "Add things that do not move, such as college or travel. DayFlow keeps these times and fits everything else around them."}, {"icon": "<path d=\"M9 6h12M9 12h12M9 18h12\"/><path d=\"M3 6l1.5 1.5L7.5 4.5M3 12l1.5 1.5 3-3M3 18l1.5 1.5 3-3\"/>", "title": "Add your tasks", "text": "Give each task a duration, a priority, and a preferred time. High-priority tasks are placed first."}, {"icon": "<rect x=\"3\" y=\"4\" width=\"18\" height=\"17\" rx=\"3\"/><path d=\"M3 9h18M8 2v4M16 2v4\"/>", "title": "Build your day", "text": "On the Today tab, press Submit schedule. When you finish a block, tap Done so it is recorded."}, {"icon": "<path d=\"M6 8a6 6 0 1 1 12 0c0 7 3 8 3 8H3s3-1 3-8\"/><path d=\"M10.3 21a1.9 1.9 0 0 0 3.4 0\"/>", "title": "Get reminders", "text": "Tap Reminders at the top and allow notifications. In the installed Android app, reminders arrive even when DayFlow is closed."}, {"icon": "<path d=\"M3 21h18\"/><rect x=\"5\" y=\"11\" width=\"3\" height=\"8\" rx=\"1\"/><rect x=\"10.5\" y=\"6\" width=\"3\" height=\"13\" rx=\"1\"/><rect x=\"16\" y=\"9\" width=\"3\" height=\"10\" rx=\"1\"/>", "title": "Track your progress", "text": "The Track tab shows what you finished and what you missed each day, with a weekly summary."}, {"icon": "<path d=\"M4 6h9M17 6h3M4 12h3M11 12h9M4 18h11M19 18h1\"/><circle cx=\"15\" cy=\"6\" r=\"2\"/><circle cx=\"9\" cy=\"12\" r=\"2\"/><circle cx=\"17\" cy=\"18\" r=\"2\"/>", "title": "You are ready", "text": "You can open this guide again at any time from Settings, under How to use DayFlow."}];
+const GUIDE = [{"icon": "<rect x=\"3\" y=\"4\" width=\"18\" height=\"17\" rx=\"3\"/><path d=\"M3 9h18M8 2v4M16 2v4\"/>", "title": "Welcome to DayFlow", "text": "DayFlow helps you study in small, focused blocks, one step at a time. The whole guide takes one minute."}, {"icon": "<path d=\"M9 6h12M9 12h12M9 18h12\"/><path d=\"M3 6l1.5 1.5L7.5 4.5M3 12l1.5 1.5 3-3M3 18l1.5 1.5 3-3\"/>", "title": "Set your day", "text": "In the Plan tab, enter your wake-up time and bedtime. DayFlow plans only the hours between them."}, {"icon": "<path d=\"M9 6h12M9 12h12M9 18h12\"/><path d=\"M3 6l1.5 1.5L7.5 4.5M3 12l1.5 1.5 3-3M3 18l1.5 1.5 3-3\"/>", "title": "Add your classes", "text": "Build your timetable once: how many periods, how long each one is, and where the breaks go. Then type the subjects."}, {"icon": "<path d=\"M9 6h12M9 12h12M9 18h12\"/><path d=\"M3 6l1.5 1.5L7.5 4.5M3 12l1.5 1.5 3-3M3 18l1.5 1.5 3-3\"/>", "title": "Add your tasks", "text": "Give each task a time, a priority, and a deadline. Use \"Break a long task down\" to split big work into 25-minute parts."}, {"icon": "<rect x=\"3\" y=\"4\" width=\"18\" height=\"17\" rx=\"3\"/><path d=\"M3 9h18M8 2v4M16 2v4\"/>", "title": "Pick 3 priorities", "text": "Each day, choose the three tasks that matter most. Start with the first one."}, {"icon": "<circle cx=\"12\" cy=\"13\" r=\"8\"/><path d=\"M12 9v4l2 2M9 2h6\"/>", "title": "Focus in blocks", "text": "Press Start for 25 minutes of focus. Then take a 5-minute break. Keep your phone out of reach while you focus."}, {"icon": "<path d=\"M6 8a6 6 0 1 1 12 0c0 7 3 8 3 8H3s3-1 3-8\"/><path d=\"M10.3 21a1.9 1.9 0 0 0 3.4 0\"/>", "title": "Get reminders", "text": "Turn on reminders from the bell button. In the installed Android app they arrive even when DayFlow is closed. Choose an evening time to plan tomorrow in Settings."}, {"icon": "<path d=\"M3 21h18\"/><rect x=\"5\" y=\"11\" width=\"3\" height=\"8\" rx=\"1\"/><rect x=\"10.5\" y=\"6\" width=\"3\" height=\"13\" rx=\"1\"/><rect x=\"16\" y=\"9\" width=\"3\" height=\"10\" rx=\"1\"/>", "title": "Review your week", "text": "At the end of the day, write a short review. In Track, see your weekly goal: finish 4 of 5 priorities."}, {"icon": "<path d=\"M4 6h9M17 6h3M4 12h3M11 12h9M4 18h11M19 18h1\"/><circle cx=\"15\" cy=\"6\" r=\"2\"/><circle cx=\"9\" cy=\"12\" r=\"2\"/><circle cx=\"17\" cy=\"18\" r=\"2\"/>", "title": "You are ready", "text": "You can open this guide again from Settings, under Help and data."}];
 let guideIndex = 0;
 function renderGuide() {
   const s = GUIDE[guideIndex];
@@ -2007,6 +2883,10 @@ renderLists = function () {
   renderTimetable();
   renderProjects();
   renderUpcoming();
+  renderFocusArea();
+  renderLibrary();
+  renderVisual();
+  renderTables();
   scheduleNativeReminders().catch(() => {});
 };
 </script>
@@ -2024,6 +2904,5 @@ renderLists = function () {
     </div>
   </div>
 </div>
-<div class="corner-mark">A_S</div>
 </body>
 </html>
